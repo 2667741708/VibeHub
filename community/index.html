@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeHub — 人人皆可编程的工具社区</title>
+    <meta name="description" content="用自然语言创造工具，用一篇图纸改变世界。VibeHub 是一个让普通人也能用 AI 编写、分享、Fork 数字工具的开源社区。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">VibeHub</span>
+            </a>
+            <div class="nav-links">
+                <a href="#explore" class="nav-link">发现工具</a>
+                <a href="#how" class="nav-link">工作原理</a>
+                <a href="#create" class="nav-link">创建工具</a>
+                <a href="#" class="nav-btn">开始使用</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-glow glow-1"></div>
+            <div class="hero-glow glow-2"></div>
+            <div class="hero-glow glow-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">🚀 自然语言编程的新范式</div>
+            <h1 class="hero-title">
+                一句话，<br>
+                <span class="gradient-text">创造你的工具</span>
+            </h1>
+            <p class="hero-desc">
+                在 VibeHub，你只需用一句话说出你想解决什么问题。<br>
+                AI 会将它变为一篇人人都能看懂、修改、传播的<strong>图纸（.vibe.md）</strong>。
+            </p>
+            <div class="hero-actions">
+                <a href="#explore" class="btn btn-primary">浏览工具库</a>
+                <a href="#how" class="btn btn-ghost">了解更多</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num" data-target="1247">0</span>
+                    <span class="stat-label">工具图纸</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num" data-target="8934">0</span>
+                    <span class="stat-label">次 Fork</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num" data-target="362">0</span>
+                    <span class="stat-label">创造者</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-preview">
+            <div class="preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot red"></span>
+                    <span class="preview-dot yellow"></span>
+                    <span class="preview-dot green"></span>
+                    <span class="preview-filename">pomodoro.vibe.md</span>
+                </div>
+                <pre class="preview-code"><code><span class="cm-h1"># 🍅 番茄工作法锁屏助手</span>
+
+<span class="cm-quote">> **创造者的话（Vibe）**：</span>
+<span class="cm-quote">> "我总是控制不住自己玩手机，</span>
+<span class="cm-quote">>  每工作25分钟，就弹出提醒休息..."</span>
+
+<span class="cm-h2">## 💻 `pomodoro.py`</span>
+<span class="cm-code">```python</span>
+<span class="cm-keyword">class</span> <span class="cm-def">PomodoroApp</span>:
+    <span class="cm-keyword">def</span> <span class="cm-def">run</span>(self):
+        <span class="cm-builtin">print</span>(<span class="cm-string">"🍅 番茄钟已启动！"</span>)
+<span class="cm-code">```</span></code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作原理 -->
+    <section class="section how-section" id="how">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">极简的工作原理</h2>
+                <p class="section-desc">没有编程经验？没关系。三步就够了。</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">01</div>
+                    <div class="step-icon">💬</div>
+                    <h3>说出你的想法</h3>
+                    <p>用一句话告诉 AI 你想解决什么问题。比如："帮我做一个能批量给照片重命名的工具"。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">02</div>
+                    <div class="step-icon">📄</div>
+                    <h3>生成一篇图纸</h3>
+                    <p>AI 自动将你的想法变成一篇 <code>.vibe.md</code> 纯文本图纸。它既是说明书，也是源码——人人都能复制粘贴。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">03</div>
+                    <div class="step-icon">🔀</div>
+                    <h3>分享 & Fork</h3>
+                    <p>发到社区或微信群。别人看到后，加一句自然语言修改需求，AI 立即生成属于他们自己的版本。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工具发现 -->
+    <section class="section explore-section" id="explore">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🔥 热门工具图纸</h2>
+                <p class="section-desc">每一个都是一篇纯文本。复制、粘贴、丢给 AI，即刻拥有。</p>
+            </div>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="life">生活效率</button>
+                <button class="filter-btn" data-filter="dev">开发辅助</button>
+                <button class="filter-btn" data-filter="fun">趣味小工具</button>
+            </div>
+            <div class="tools-grid" id="toolsGrid">
+                <!-- Cards injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 创建引导 -->
+    <section class="section create-section" id="create">
+        <div class="container">
+            <div class="create-card">
+                <div class="create-left">
+                    <h2>创建你的第一个 Vibe 工具</h2>
+                    <p>只需一行命令，把你的代码和想法变成人人可传播的图纸。</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Terminal</span>
+                            <button class="copy-btn" onclick="copyCode()">复制</button>
+                        </div>
+                        <pre><code id="installCode">python vibe_export.py "我写了一个番茄钟" app.py</code></pre>
+                    </div>
+                    <p class="create-note">
+                        或者，更简单——直接在你喜欢的 AI 对话框里说：<br>
+                        <em>"帮我把下面的代码整理成 .vibe.md 格式的图纸"</em>
+                    </p>
+                </div>
+                <div class="create-right">
+                    <div class="feature-list">
+                        <div class="feature">
+                            <span class="feature-icon">📝</span>
+                            <div>
+                                <strong>纯文本，零门槛</strong>
+                                <p>不需要注册账号，不需要安装软件</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🌍</span>
+                            <div>
+                                <strong>跨平台、跨语言</strong>
+                                <p>Python、JS、Bash、任何语言都行</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🤖</span>
+                            <div>
+                                <strong>AI 原生格式</strong>
+                                <p>专为大语言模型优化的可读结构</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔗</span>
+                            <div>
+                                <strong>影响力追踪</strong>
+                                <p>每个 Fork 都被记录，你的贡献永不消失</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工具详情浮层 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="toolModal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">⚡</span> VibeHub
+                    <p>让每个人都能用自然语言解决生活中的小问题。</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">GitHub</a>
+                    <a href="#">关于我们</a>
+                    <a href="#">贡献指南</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 VibeHub · 开源 · 人人皆可编程</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
