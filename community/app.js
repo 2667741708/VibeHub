@@ -470,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // === GitHub OAuth 登录相关 ===
-const GITHUB_CLIENT_ID = '0v23lifd2X85p0C5nIXT';
+const GITHUB_CLIENT_ID = 'Ov23lifd2X85p0C5nIXT';
 // 如果部署到 Vercel/Netlify 等，填写它部署后的域名。本地测试时填 http://localhost:3000/api/auth
 // 注意：暂时使用相对路径，这要求我们把 /api 放在同一个域名下
 const AUTH_PROXY_URL = window.location.hostname.includes('localhost') 
