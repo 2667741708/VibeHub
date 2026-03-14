@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     console.log("Exchanging code for token...");
     
     // Hardcode Client ID, getting secret from Vercel Environment Variables
-    const client_id = "0v23lifd2X85p0C5nIXT";
+    const client_id = "Ov23lifd2X85p0C5nIXT";
     const client_secret = process.env.GITHUB_CLIENT_SECRET;
     
     if (!client_secret) {
