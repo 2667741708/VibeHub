@@ -468,3 +468,131 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.3 });
     observer.observe(document.querySelector('.hero-stats'));
 });
+
+// === GitHub OAuth 登录相关 ===
+const GITHUB_CLIENT_ID = '0v23lifd2X85p0C5nIXT';
+// 如果部署到 Vercel/Netlify 等，填写它部署后的域名。本地测试时填 http://localhost:3000/api/auth
+// 注意：暂时使用相对路径，这要求我们把 /api 放在同一个域名下
+const AUTH_PROXY_URL = window.location.hostname.includes('localhost') 
+    ? 'http://localhost:3000/api/auth'
+    : 'https://vibe-hub-sandy.vercel.app/api/auth'; // Vercel Serverless 部署地址
+
+function loginWithGitHub(e) {
+    if (e) e.preventDefault();
+    
+    // 生成状态码防止 CSRF
+    const state = Math.random().toString(36).substring(7);
+    sessionStorage.setItem('oauth_state', state);
+    
+    // 当前页面 URL，作为回调跳回
+    const redirectUri = window.location.origin + window.location.pathname;
+    
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}&scope=read:user`;
+    
+    window.location.href = authUrl;
+}
+
+function logout() {
+    localStorage.removeItem('github_token');
+    localStorage.removeItem('github_user');
+    updateAuthUI();
+}
+
+async function handleOAuthCallback() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const returnedState = params.get('state');
+    
+    if (!code) return; // Not a callback
+    
+    // 清理 URL，保持整洁
+    const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+    window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+    
+    const savedState = sessionStorage.getItem('oauth_state');
+    if (savedState && returnedState !== savedState) {
+        alert("登录状态异常，请重试。");
+        return;
+    }
+    
+    try {
+        const btn = document.getElementById('login-btn');
+        if(btn) btn.textContent = '登录中...';
+        
+        // 调用我们的 Serverless 代理函数交换 Token
+        const response = await fetch(AUTH_PROXY_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code })
+        });
+        
+        const data = await response.json();
+        
+        if (data.access_token) {
+            localStorage.setItem('github_token', data.access_token);
+            await fetchUserProfile(data.access_token);
+        } else {
+            console.error("Token exchange failed:", data);
+            alert("登录验证失败：" + (data.error || "未知原因"));
+            updateAuthUI();
+        }
+    } catch (e) {
+        console.error("Auth proxy error:", e);
+        alert("连接验证服务器失败，请稍后重试。");
+        updateAuthUI();
+    }
+}
+
+async function fetchUserProfile(token) {
+    try {
+        const res = await fetch('https://api.github.com/user', {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (res.ok) {
+            const user = await res.json();
+            localStorage.setItem('github_user', JSON.stringify(user));
+            updateAuthUI();
+        } else {
+            // Token 可能已过期或无效
+            logout();
+        }
+    } catch (e) {
+        console.error("Failed to fetch user profile:", e);
+    }
+}
+
+function updateAuthUI() {
+    const authContainer = document.getElementById('auth-container');
+    if (!authContainer) return;
+    
+    const userStr = localStorage.getItem('github_user');
+    
+    if (userStr) {
+        try {
+            const user = JSON.parse(userStr);
+            authContainer.innerHTML = `
+                <div class="user-profile" style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="logout()" title="点击退出登录">
+                    <img src="${user.avatar_url}" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover;">
+                    <span style="font-size: 0.9rem; font-weight: 500;">${user.login}</span>
+                </div>
+            `;
+        } catch(e) {
+            authContainer.innerHTML = `<a href="#" class="nav-btn" id="login-btn" onclick="loginWithGitHub(event)">GitHub 登录</a>`;
+        }
+    } else {
+        authContainer.innerHTML = `<a href="#" class="nav-btn" id="login-btn" onclick="loginWithGitHub(event)">GitHub 登录</a>`;
+    }
+}
+
+// 在页面加载时检查回调并初始化 UI
+document.addEventListener('DOMContentLoaded', () => {
+    handleOAuthCallback().then(() => {
+        updateAuthUI();
+    });
+});
