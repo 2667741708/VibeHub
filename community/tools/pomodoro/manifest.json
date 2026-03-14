@@ -1,0 +1,13 @@
+{
+  "name": "番茄工作法锁屏助手",
+  "id": "pomodoro",
+  "description": "一个极简的专注计时器。每工作25分钟，弹出全屏红色大字倒计时提醒你必须休息5分钟，并随机给你一句鼓励的话。",
+  "category": "life",
+  "tags": ["效率", "番茄钟", "健康", "专注"],
+  "author": "2667741708",
+  "version": "1.0.0",
+  "language": "python",
+  "requirements": "Python 3.8+, tkinter",
+  "entry": "src/pomodoro.py",
+  "created": "2026-03-13"
+}

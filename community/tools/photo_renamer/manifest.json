@@ -1,0 +1,13 @@
+{
+  "name": "照片批量整理器",
+  "id": "photo_renamer",
+  "description": "自动读取照片拍摄日期，把成百上千张杂乱照片按「年-月」分类到不同文件夹，并按时间线批量重命名。",
+  "category": "life",
+  "tags": ["照片", "整理", "批量重命名", "效率"],
+  "author": "2667741708",
+  "version": "1.0.0",
+  "language": "python",
+  "requirements": "Python 3.8+, Pillow",
+  "entry": "src/photo_renamer.py",
+  "created": "2026-03-12"
+}

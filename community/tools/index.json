@@ -1,0 +1,78 @@
+[
+  {
+    "name": "多服务器代码同步器",
+    "id": "svc_spider",
+    "description": "一个 VS Code 插件化脚本，能把你正在写的代码瞬间同步分发到你配置的多台远程 GPU 服务器上。",
+    "category": "dev",
+    "tags": [
+      "服务器",
+      "同步",
+      "VS Code",
+      "远程开发"
+    ],
+    "author": "2667741708",
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Node.js 18+, VS Code 1.80+",
+    "entry": "src/extension.ts",
+    "created": "2026-03-14",
+    "path": "tools/svc_spider"
+  },
+  {
+    "name": "番茄工作法锁屏助手",
+    "id": "pomodoro",
+    "description": "一个极简的专注计时器。每工作25分钟，弹出全屏红色大字倒计时提醒你必须休息5分钟，并随机给你一句鼓励的话。",
+    "category": "life",
+    "tags": [
+      "效率",
+      "番茄钟",
+      "健康",
+      "专注"
+    ],
+    "author": "2667741708",
+    "version": "1.0.0",
+    "language": "python",
+    "requirements": "Python 3.8+, tkinter",
+    "entry": "src/pomodoro.py",
+    "created": "2026-03-13",
+    "path": "tools/pomodoro"
+  },
+  {
+    "name": "照片批量整理器",
+    "id": "photo_renamer",
+    "description": "自动读取照片拍摄日期，把成百上千张杂乱照片按「年-月」分类到不同文件夹，并按时间线批量重命名。",
+    "category": "life",
+    "tags": [
+      "照片",
+      "整理",
+      "批量重命名",
+      "效率"
+    ],
+    "author": "2667741708",
+    "version": "1.0.0",
+    "language": "python",
+    "requirements": "Python 3.8+, Pillow",
+    "entry": "src/photo_renamer.py",
+    "created": "2026-03-12",
+    "path": "tools/photo_renamer"
+  },
+  {
+    "name": "WiFi 测速小助手",
+    "id": "wifi_speed",
+    "description": "一键测试你当前的真实下载和上传速度，用醒目的大字直接告诉你网速正常还是确实很卡。",
+    "category": "life",
+    "tags": [
+      "网速",
+      "测速",
+      "WiFi",
+      "网络"
+    ],
+    "author": "2667741708",
+    "version": "1.0.0",
+    "language": "python",
+    "requirements": "Python 3.8+, speedtest-cli",
+    "entry": "src/wifi_speed.py",
+    "created": "2026-03-10",
+    "path": "tools/wifi_speed"
+  }
+]

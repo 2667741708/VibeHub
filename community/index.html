@@ -139,30 +139,29 @@
             <div class="create-card">
                 <div class="create-left">
                     <h2>发布你的 Vibe 工具</h2>
-                    <p>有了一个好点子？写成了一段代码？直接发布到社区，让更多人用到。</p>
+                    <p>有了一个好点子？用 AI 写好了代码？只需三步就能发布到社区。</p>
                     
-                    <div class="web-form-container">
-                        <div class="form-group">
-                            <label>一句话描述你的工具（让别人知道它有什么用）</label>
-                            <input type="text" id="toolDescInput" class="form-input" placeholder="例如：一个极简的命令行记账本，自动算总账">
+                    <div class="publish-steps">
+                        <div class="publish-step">
+                            <div class="step-num">01</div>
+                            <h4>复制「AI 发布协议」</h4>
+                            <p>点击下方按钮，将发布协议复制到剪贴板。</p>
                         </div>
-                        <div class="form-group">
-                            <label>选择所属分类</label>
-                            <select id="toolCategoryInput" class="form-input">
-                                <option value="life">生活效率</option>
-                                <option value="dev">开发辅助</option>
-                                <option value="fun">趣味小工具</option>
-                            </select>
+                        <div class="publish-step">
+                            <div class="step-num">02</div>
+                            <h4>粘贴给你的 AI 助手</h4>
+                            <p>打开 ChatGPT / Claude / 豆包，把协议粘贴进去，再告诉它你的工具信息。</p>
                         </div>
-                        <div class="form-group">
-                            <label>工具的代码内容（直接粘贴即可）</label>
-                            <textarea id="toolCodeInput" class="form-input" rows="4" placeholder="粘贴 Python, JS 或 HTML 代码..."></textarea>
+                        <div class="publish-step">
+                            <div class="step-num">03</div>
+                            <h4>AI 自动提交</h4>
+                            <p>AI 会自动生成文档、打包代码，并通过 GitHub API 帮你提交 PR。</p>
                         </div>
-                        <button class="btn btn-primary w-full" onclick="publishTool(event)">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
-                            一键生成并发布
-                        </button>
                     </div>
+                    <button class="btn btn-primary w-full copy-guide-btn" onclick="copyPublishGuide()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        一键复制 AI 发布协议
+                    </button>
                 </div>
                 <div class="create-right">
                     <div class="feature-list">

@@ -1,0 +1,13 @@
+{
+  "name": "WiFi 测速小助手",
+  "id": "wifi_speed",
+  "description": "一键测试你当前的真实下载和上传速度，用醒目的大字直接告诉你网速正常还是确实很卡。",
+  "category": "life",
+  "tags": ["网速", "测速", "WiFi", "网络"],
+  "author": "2667741708",
+  "version": "1.0.0",
+  "language": "python",
+  "requirements": "Python 3.8+, speedtest-cli",
+  "entry": "src/wifi_speed.py",
+  "created": "2026-03-10"
+}
