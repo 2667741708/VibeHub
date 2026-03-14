@@ -1,5 +1,26 @@
 [
   {
+    "name": "AI Paper Reader",
+    "id": "ai_paper_reader",
+    "description": "上传一篇英文论文 PDF，选中文字即弹出翻译和术语解释气泡，还能一键生成摘要、与 AI 深度问答，最后导出完整的中文阅读笔记。",
+    "category": "dev",
+    "tags": [
+      "学术",
+      "论文",
+      "翻译",
+      "AI阅读",
+      "Gemini",
+      "PDF"
+    ],
+    "author": "2667741708",
+    "version": "3.2.0",
+    "language": "javascript",
+    "requirements": "Node.js >= 18, Gemini CLI 或 Gemini API Key, Python 3 + PyMuPDF",
+    "entry": "src/index.html",
+    "created": "2026-03-14",
+    "path": "tools/ai_paper_reader"
+  },
+  {
     "name": "多服务器代码同步器",
     "id": "svc_spider",
     "description": "一个 VS Code 插件化脚本，能把你正在写的代码瞬间同步分发到你配置的多台远程 GPU 服务器上。",

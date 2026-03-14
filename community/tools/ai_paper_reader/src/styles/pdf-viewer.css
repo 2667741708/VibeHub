@@ -1,0 +1,172 @@
+/* ====================================
+ * PDF Viewer 样式 / PDF Viewer Styles
+ * "墨韵学府" 典雅设计 / Elegant Academic Design
+ * ====================================
+ * 版本 / Version: 3.0.0
+ * 修改基准 / Based on: v1.0.0
+ * 修改内容 / Changes (v1.0.0 → v3.0.0):
+ *   - [重写] 页面容器阴影和文本层样式匹配新色彩体系
+ *     [Rewrite] Page container shadows and text layer styles
+ * ==================================== */
+
+.pdf-viewer {
+  flex: 1;
+  overflow: auto;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.pdf-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 20px;
+}
+
+/* 单页容器 / Page Container */
+.pdf-page-wrapper {
+  position: relative;
+  background: white;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevation);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.pdf-page-wrapper:hover {
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,163,90,0.1);
+}
+
+.pdf-page-wrapper canvas {
+  display: block;
+}
+
+/* 文本覆盖层 / Text Overlay */
+.text-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  opacity: 0.25;
+  line-height: 1.0;
+  z-index: 2;
+}
+
+.text-layer > span {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+}
+
+.text-layer ::selection {
+  background: var(--accent-primary);
+  color: transparent;
+  opacity: 0.35;
+}
+
+/* 页码标签 / Page Number */
+.page-number-label {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  padding: 3px 10px;
+  background: rgba(12, 14, 20, 0.7);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  border-radius: var(--radius-xs);
+  font-variant-numeric: tabular-nums;
+  z-index: 3;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+/* 段落翻译按钮 / Paragraph Translate Button */
+.paragraph-translate-btn {
+  position: absolute;
+  right: -36px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 5;
+}
+
+.pdf-page-wrapper:hover .paragraph-translate-btn {
+  opacity: 0.6;
+}
+
+.paragraph-translate-btn:hover {
+  opacity: 1 !important;
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border-color: var(--accent-primary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* 段落翻译展开区域 / Paragraph Translation */
+.paragraph-translation {
+  margin: 8px 0;
+  padding: 14px 16px;
+  background: var(--accent-gradient-subtle);
+  border-left: 2px solid var(--accent-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.paragraph-translation .translation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: var(--accent-primary);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.paragraph-translation .translation-toggle {
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  transition: color var(--transition-fast);
+}
+
+.paragraph-translation .translation-toggle:hover {
+  color: var(--text-primary);
+}
+
+.paragraph-translation .translation-text {
+  overflow: hidden;
+  transition: max-height var(--transition-slow);
+}
+
+.paragraph-translation .translation-text.collapsed {
+  max-height: 0;
+}

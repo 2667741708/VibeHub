@@ -1,0 +1,50 @@
+/* Annotation Styles — v3.0.0 (Based on v1.0.0) */
+/* [Rewrite] Highlight colors match warm palette */
+
+.highlight-yellow { background: rgba(212, 184, 108, 0.25); }
+.highlight-green  { background: rgba(125, 186, 132, 0.22); }
+.highlight-pink   { background: rgba(212, 115, 108, 0.22); }
+.highlight-blue   { background: rgba(123, 147, 184, 0.25); }
+.highlight-orange { background: rgba(201, 123, 75, 0.22); }
+
+.text-highlight {
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s ease;
+  position: relative;
+}
+.text-highlight:hover { filter: brightness(1.2); }
+
+.highlight-toolbar {
+  position: fixed;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(17, 21, 32, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  box-shadow: var(--shadow-deep);
+  animation: bubbleSlide 0.2s ease;
+}
+
+.highlight-color-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.highlight-color-btn:hover {
+  transform: scale(1.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.highlight-color-btn.yellow { background: #d4b86c; }
+.highlight-color-btn.green  { background: #7dba84; }
+.highlight-color-btn.pink   { background: #d4736c; }
+.highlight-color-btn.blue   { background: #7b93b8; }
+.highlight-color-btn.orange { background: #c97b4b; }
