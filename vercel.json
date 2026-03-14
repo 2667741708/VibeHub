@@ -5,8 +5,28 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/(.*)",
+      "source": "/style.css",
+      "destination": "/community/style.css"
+    },
+    {
+      "source": "/app.js",
+      "destination": "/community/app.js"
+    },
+    {
+      "source": "/tools/(.*)",
+      "destination": "/community/tools/$1"
+    },
+    {
+      "source": "/themes/(.*)",
+      "destination": "/community/themes/$1"
+    },
+    {
+      "source": "/",
       "destination": "/community/index.html"
+    },
+    {
+      "source": "/((?!community|api|_next).*)",
+      "destination": "/community/$1"
     }
   ]
 }
