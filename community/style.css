@@ -173,6 +173,17 @@ code { font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; }
 .step-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; }
 .step-card code { background: rgba(124,92,252,0.15); padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; color: var(--accent-bright); }
 
+/* === Search Bar === */
+.search-bar { max-width: 520px; margin: 0 auto 24px; }
+.search-input {
+    width: 100%; padding: 14px 22px; border-radius: 100px;
+    border: 1px solid var(--border); background: var(--bg-card);
+    color: var(--text-primary); font-size: 0.95rem; font-family: var(--font);
+    transition: var(--transition); outline: none;
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+
 /* === Explore / Tools Grid === */
 .filter-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
 .filter-btn {

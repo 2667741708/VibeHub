@@ -230,26 +230,48 @@ if __name__ == "__main__":
     }
 ];
 
-// === 渲染工具卡片 ===
-function renderTools(filter = 'all') {
-    const grid = document.getElementById('toolsGrid');
-    const filtered = filter === 'all' ? TOOLS : TOOLS.filter(t => t.category === filter);
+// === 当前筛选/搜索状态 ===
+let currentFilter = 'all';
+let currentSearch = '';
 
-    grid.innerHTML = filtered.map(tool => `
-        <div class="tool-card" data-id="${tool.id}" onclick="openTool('${tool.id}')">
-            <div class="tool-card-header">
-                <span class="tool-emoji">${tool.emoji}</span>
-                <span class="tool-tag">${tool.tag}</span>
-            </div>
-            <h3>${tool.name}</h3>
-            <p class="tool-vibe">"${tool.vibe}"</p>
-            <div class="tool-meta">
-                <span>🔀 直接Fork ${tool.forksDirect}</span>
-                <span>🌳 间接Fork ${tool.forksIndirect}</span>
-                <span>📅 ${tool.date}</span>
-            </div>
-        </div>
-    `).join('');
+// === 渲染工具卡片（支持筛选+搜索） ===
+function renderTools(filter, search) {
+    if (filter !== undefined) currentFilter = filter;
+    if (search !== undefined) currentSearch = search;
+    const grid = document.getElementById('toolsGrid');
+    let filtered = currentFilter === 'all' ? [...TOOLS] : TOOLS.filter(t => t.category === currentFilter);
+
+    if (currentSearch.trim()) {
+        const q = currentSearch.trim().toLowerCase();
+        filtered = filtered.filter(t =>
+            t.name.toLowerCase().includes(q) ||
+            t.vibe.toLowerCase().includes(q) ||
+            t.tag.toLowerCase().includes(q)
+        );
+    }
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-muted);"><div style="font-size:3rem;margin-bottom:16px;">🔍</div><p style="font-size:1.1rem;">没有找到匹配的工具</p><p style="font-size:0.9rem;margin-top:8px;">试试其他关键词？比如「服务器」「照片」「番茄钟」</p></div>';
+        return;
+    }
+
+    grid.innerHTML = filtered.map(tool => {
+        let dn = tool.name;
+        let dv = tool.vibe;
+        if (currentSearch.trim()) {
+            const q = currentSearch.trim();
+            const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            const hl = '<mark style="background:rgba(124,92,252,0.35);color:#9b7cff;border-radius:2px;padding:0 1px;">$1</mark>';
+            dn = dn.replace(re, hl);
+            dv = dv.replace(re, hl);
+        }
+        return `<div class="tool-card" data-id="${tool.id}" onclick="openTool('${tool.id}')">
+            <div class="tool-card-header"><span class="tool-emoji">${tool.emoji}</span><span class="tool-tag">${tool.tag}</span></div>
+            <h3>${dn}</h3>
+            <p class="tool-vibe">"${dv}"</p>
+            <div class="tool-meta"><span>🔀 直接Fork ${tool.forksDirect}</span><span>🌳 间接Fork ${tool.forksIndirect}</span><span>📅 ${tool.date}</span></div>
+        </div>`;
+    }).join('');
 }
 
 // === 模态框：展示 .vibe.md 详情 ===
@@ -383,8 +405,27 @@ function initFilters() {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderTools(btn.dataset.filter);
+            document.getElementById('searchInput').value = '';
+            renderTools(btn.dataset.filter, '');
         });
+    });
+}
+
+// === 搜索功能 ===
+function initSearch() {
+    const input = document.getElementById('searchInput');
+    let timer;
+    input.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            if (input.value.trim()) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+                renderTools('all', input.value);
+            } else {
+                renderTools(undefined, '');
+            }
+        }, 200);
     });
 }
 
@@ -402,8 +443,9 @@ function initNavbar() {
 
 // === 初始化 ===
 document.addEventListener('DOMContentLoaded', () => {
-    renderTools();
+    renderTools('all', '');
     initFilters();
+    initSearch();
     initNavbar();
 
     // 模态框关闭
