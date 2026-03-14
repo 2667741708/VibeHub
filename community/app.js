@@ -41,6 +41,18 @@ const TOOLS = [
         file: 'tools/wifi_speed.vibe.md'
     },
     {
+        id: 'svc_spider',
+        emoji: '🕷️',
+        name: 'SVC Spider 多服务器织网插件',
+        tag: '开发辅助',
+        category: 'dev',
+        vibe: '我每天要在3-4台GPU服务器之间来回切换做实验，想要一个像蜘蛛结网一样的VS Code插件，把所有服务器同时挂载到同一个工作区。',
+        forksDirect: 7,
+        forksIndirect: 18,
+        date: '2026-03-14',
+        file: 'tools/svc_spider.vibe.md'
+    },
+    {
         id: 'git_commit',
         emoji: '📝',
         name: 'Git 提交消息生成器',
