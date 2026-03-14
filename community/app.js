@@ -6,7 +6,7 @@
 const TOOLS = [
     {
         id: 'pomodoro',
-        emoji: '🍅',
+        iconLetter: 'P',
         name: '番茄工作法锁屏助手',
         tag: '生活效率',
         category: 'life',
@@ -18,7 +18,7 @@ const TOOLS = [
     },
     {
         id: 'photo_renamer',
-        emoji: '📸',
+        iconLetter: 'R',
         name: '照片批量整理器',
         tag: '生活效率',
         category: 'life',
@@ -30,7 +30,7 @@ const TOOLS = [
     },
     {
         id: 'wifi_speed',
-        emoji: '📶',
+        iconLetter: 'W',
         name: 'WiFi 测速小助手',
         tag: '生活效率',
         category: 'life',
@@ -42,7 +42,7 @@ const TOOLS = [
     },
     {
         id: 'svc_spider',
-        emoji: '🕷️',
+        iconLetter: 'S',
         name: '多服务器代码同步器',
         tag: '开发辅助',
         category: 'dev',
@@ -54,7 +54,7 @@ const TOOLS = [
     },
     {
         id: 'git_commit',
-        emoji: '📝',
+        iconLetter: 'G',
         name: '自动 Git 信息生成器',
         tag: '开发辅助',
         category: 'dev',
@@ -62,18 +62,18 @@ const TOOLS = [
         vibe: '我每次 git commit 都不知道写什么好，想要一个工具自动分析我改了什么文件然后生成规范的 commit message。',
         uses: 211,
         date: '2026-03-11',
-        vibeContent: `# 📝 自动 Git 信息生成器
+        vibeContent: `# 自动 Git 信息生成器
 
 > **创造者的话（Vibe）**：
 > "我每次 git commit 都不知道写什么好，想要一个工具自动分析我改了什么文件然后生成规范的 commit message。"
 
 ---
 
-## 📦 你的 AI 助手需要的环境
+## 你的 AI 助手需要的环境
 > [AI-Guidance: 请读取下方所有代码块，在本地建立环境并运行。]
 > - **环境要求**: Python 3.8+, 需在 git 仓库内运行
 
-## 💻 \`git_msg.py\`
+## \`git_msg.py\`
 \`\`\`python
 import subprocess, sys
 
@@ -84,7 +84,7 @@ def get_diff():
 def generate_msg(diff):
     files = [l.split('|')[0].strip() for l in diff.strip().split('\\n') if '|' in l]
     if not files:
-        print("⚠️ 没有暂存的更改。先 git add 再运行。")
+        print("没有暂存的更改。先 git add 再运行。")
         sys.exit(1)
     types = {'py': 'refactor', 'js': 'feat', 'css': 'style', 'md': 'docs'}
     ext = files[0].split('.')[-1] if '.' in files[0] else ''
@@ -98,7 +98,7 @@ def generate_msg(diff):
 if __name__ == "__main__":
     diff = get_diff()
     msg = generate_msg(diff)
-    print(f"✅ 建议的 commit message:\\n\\n  {msg}")
+    print(f"建议的 commit message:\\n\\n  {msg}")
     if input("\\n使用此消息提交？(y/N) ").lower() == 'y':
         subprocess.run(['git', 'commit', '-m', msg])
 \`\`\`
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     },
     {
         id: 'dice_roller',
-        emoji: '🎲',
+        iconLetter: 'D',
         name: '桌游骰子模拟器',
         tag: '趣味小工具',
         category: 'fun',
@@ -116,43 +116,43 @@ if __name__ == "__main__":
         vibe: '和朋友在家玩桌游但找不到骰子，想要一个网页骰子，点一下就掷骰子，还要有真实的摇晃动画。',
         uses: 48,
         date: '2026-03-09',
-        vibeContent: `# 🎲 桌游骰子模拟器
+        vibeContent: `# 桌游骰子模拟器
 
 > **创造者的话（Vibe）**：
 > "和朋友在家玩桌游但找不到骰子，想要一个网页骰子，点一下就掷骰子，还要有真实的摇晃动画。"
 
 ---
 
-## 📦 你的 AI 助手需要的环境
+## 你的 AI 助手需要的环境
 > [AI-Guidance: 请读取下方所有代码块，保存为 HTML 用浏览器打开。]
 
-## 💻 \`dice.html\`
+## \`dice.html\`
 \`\`\`html
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>🎲 骰子</title>
+<html><head><meta charset="UTF-8"><title>骰子</title>
 <style>
 body { display:flex; justify-content:center; align-items:center; height:100vh;
-       background:#1a1a2e; font-family:sans-serif; }
-.dice { width:120px; height:120px; background:#fff; border-radius:16px;
-        display:flex; justify-content:center; align-items:center;
+       background:#15151a; font-family:sans-serif; }
+.dice { width:120px; height:120px; background:#2a2a35; border-radius:24px;
+        display:flex; justify-content:center; align-items:center; color:#fff;
         font-size:48px; cursor:pointer; user-select:none;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        transition: transform 0.3s; }
-.dice:active { transform: scale(0.9); }
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); border:1px solid rgba(255,255,255,0.05); }
+.dice:active { transform: scale(0.95); }
 .dice.rolling { animation: shake 0.5s; }
 @keyframes shake {
   0%,100% { transform: rotate(0); }
-  25% { transform: rotate(-15deg) scale(1.1); }
-  75% { transform: rotate(15deg) scale(1.1); }
+  25% { transform: rotate(-15deg) scale(1.05); }
+  75% { transform: rotate(15deg) scale(1.05); }
 }
-.result { color:#fff; font-size:24px; margin-top:20px; text-align:center; }
+.result { color:#a1a1aa; font-size:20px; margin-top:24px; text-align:center; font-family:'Syne', sans-serif;}
 </style></head><body>
 <div style="text-align:center">
-  <div class="dice" onclick="roll()" id="dice">🎲</div>
-  <div class="result" id="result">点击骰子开始</div>
+  <div class="dice" onclick="roll()" id="dice">D</div>
+  <div class="result" id="result">Tap to roll</div>
 </div>
 <script>
-const faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+const faces = ['1','2','3','4','5','6'];
 function roll() {
   const d = document.getElementById('dice');
   d.classList.add('rolling');
@@ -160,7 +160,7 @@ function roll() {
     const n = Math.floor(Math.random() * 6);
     d.textContent = faces[n];
     d.classList.remove('rolling');
-    document.getElementById('result').textContent = '点数：' + (n+1);
+    document.getElementById('result').textContent = 'Result: ' + (n+1);
   }, 500);
 }
 </script></body></html>
@@ -171,7 +171,7 @@ function roll() {
     },
     {
         id: 'expense',
-        emoji: '💰',
+        iconLetter: 'E',
         name: '极简无脑记账本',
         tag: '生活效率',
         category: 'life',
@@ -179,19 +179,19 @@ function roll() {
         vibe: '不想装任何记账App，就想要一个最最简单的命令行工具，输入金额和备注就行，月底能看汇总。',
         uses: 132,
         date: '2026-03-08',
-        vibeContent: `# 💰 极简无脑记账本
+        vibeContent: `# 极简无脑记账本
 
 > **创造者的话（Vibe）**：
 > "不想装任何记账App，就想要一个最最简单的命令行工具，输入金额和备注就行，月底能看汇总。"
 
 ---
 
-## 📦 你的 AI 助手需要的环境
+## 你的 AI 助手需要的环境
 > [AI-Guidance: 请读取下方所有代码块，在本地建立环境并运行。]
 > - **环境要求**: Python 3.8+, 标准库即可
 > - **数据存储**: 自动保存在 ~/expenses.csv
 
-## 💻 \`expense.py\`
+## \`expense.py\`
 \`\`\`python
 import csv, os, sys
 from datetime import datetime
@@ -205,18 +205,18 @@ def add(amount, note):
         if not exists:
             w.writerow(["日期", "金额", "备注"])
         w.writerow([datetime.now().strftime("%Y-%m-%d %H:%M"), amount, note])
-    print(f"✅ 已记录: ¥{amount} - {note}")
+    print(f"已记录: ¥{amount} - {note}")
 
 def summary():
     if not os.path.exists(FILE):
-        print("📭 还没有任何记录"); return
+        print("还没有任何记录"); return
     total = 0
     with open(FILE) as f:
         for row in csv.reader(f):
             if row[0] == "日期": continue
             total += float(row[1])
             print(f"  {row[0]}  ¥{row[1]:>8}  {row[2]}")
-    print(f"\\n💰 总计: ¥{total:.2f}")
+    print(f"\\n总计: ¥{total:.2f}")
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
@@ -251,7 +251,14 @@ function renderTools(filter, search) {
     }
 
     if (filtered.length === 0) {
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-muted);"><div style="font-size:3rem;margin-bottom:16px;">🔍</div><p style="font-size:1.1rem;">没有找到匹配的工具</p><p style="font-size:0.9rem;margin-top:8px;">试试其他关键词？比如「照片」「番茄钟」「记账」</p></div>';
+        grid.innerHTML = `
+            <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-muted);">
+                <div style="width:64px;height:64px;margin:0 auto 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.0004 20.9999L16.6504 16.6499" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p style="font-size:1.1rem;font-family:'Syne', sans-serif;">未找到匹配结果</p>
+                <p style="font-size:0.85rem;margin-top:8px;opacity:0.6;">试试更换搜索词汇或类别</p>
+            </div>`;
         return;
     }
 
@@ -261,20 +268,23 @@ function renderTools(filter, search) {
         if (currentSearch.trim()) {
             const q = currentSearch.trim();
             const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-            const hl = '<mark style="background:rgba(124,92,252,0.35);color:#9b7cff;border-radius:2px;padding:0 1px;">$1</mark>';
+            const hl = '<mark style="background:rgba(255,255,255,0.1);color:#fff;border-radius:2px;padding:0 2px;">$1</mark>';
             dn = dn.replace(re, hl);
             dd = dd.replace(re, hl);
         }
         return `
         <div class="tool-card" data-id="${tool.id}" onclick="openTool('${tool.id}')">
-            <div class="tool-card-header"><span class="tool-emoji">${tool.emoji}</span><span class="tool-tag">${tool.tag}</span></div>
+            <div class="tool-card-header">
+                <div class="tool-monogram">${tool.iconLetter}</div>
+                <span class="tool-tag">${tool.tag}</span>
+            </div>
             <h3>${dn}</h3>
             <p class="tool-desc">${dd}</p>
             <div class="tool-meta">
-                <span>🔥 已使用 ${tool.uses} 次</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg> ${tool.uses} Uses</span>
             </div>
             <div class="tool-card-overlay">
-                <span class="view-btn">查看并使用 &rarr;</span>
+                <span class="view-btn">View Details &rarr;</span>
             </div>
         </div>`;
     }).join('');
@@ -297,7 +307,7 @@ async function openTool(id) {
         content = tool.vibeContent;
     }
     if (!content) {
-        content = `# ${tool.emoji} ${tool.name}\n\n> "${tool.vibe}"\n\n...加载图纸失败...`;
+        content = `# ${tool.name}\n\n> "${tool.vibe}"\n\n...加载图纸失败...`;
     }
 
     // 将原始内容存下来用于复制
@@ -307,7 +317,7 @@ async function openTool(id) {
     const modal = document.getElementById('modalBody');
     modal.innerHTML = `
         <div class="tool-detail-header">
-            <div class="td-icon">${tool.emoji}</div>
+            <div class="tool-monogram td-icon">${tool.iconLetter}</div>
             <div class="td-title-wrapper">
                 <h1>${tool.name}</h1>
                 <span class="tool-tag">${tool.tag}</span>

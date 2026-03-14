@@ -6,7 +6,7 @@
     <title>VibeHub — 人人皆可编程的工具社区</title>
     <meta name="description" content="发现并使用强大的 AI 工具。VibeHub 是一个让普通人也能用 AI 运行、分享数字工具的开源社区。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <span class="logo-icon">⚡</span>
+                <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                 <span class="logo-text">VibeHub</span>
             </a>
             <div class="nav-links">
@@ -39,7 +39,10 @@
             <div class="hero-glow glow-3"></div>
         </div>
         <div class="hero-content">
-            <div class="hero-badge">✨ 你的个人 AI 工具箱</div>
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                高端数字工作台
+            </div>
             <h1 class="hero-title">
                 用自然语言，<br>
                 <span class="gradient-text">解决生活的小问题</span>
@@ -79,19 +82,25 @@
             <div class="steps-grid">
                 <div class="step-card">
                     <div class="step-num">01</div>
-                    <div class="step-icon">🔍</div>
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
                     <h3>找到你需要的工具</h3>
                     <p>在下方的工具库中，搜索能解决你当下需求的小助手。比如："番茄钟"或"照片重命名"。</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">02</div>
-                    <div class="step-icon">📋</div>
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </div>
                     <h3>一键复制图纸</h3>
                     <p>点击工具卡片，你会看到它的详细功能。直接点击大大的「<strong>一键复制图纸</strong>」按钮。</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">03</div>
-                    <div class="step-icon">🤖</div>
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
                     <h3>交给 AI 运行</h3>
                     <p>把复制好的图纸，粘贴发给你的 AI 助手 (如 ChatGPT, Claude, 豆包等)，它就会马上为你运行这个工具！</p>
                 </div>
@@ -103,11 +112,14 @@
     <section class="section explore-section" id="explore">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🔥 热门工具库</h2>
+                <h2 class="section-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:text-bottom;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    热门工具库
+                </h2>
                 <p class="section-desc">每一个工具都解决了一个真实的痛点。马上挑选一个试试吧。</p>
             </div>
             <div class="search-bar">
-                <input type="text" class="search-input" id="searchInput" placeholder="🔍 搜索工具... 例如：照片、番茄钟、记账" autocomplete="off">
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索工具... 例如：照片、番茄钟、记账" autocomplete="off">
             </div>
             <div class="filter-bar">
                 <button class="filter-btn active" data-filter="all">全部</button>
@@ -147,28 +159,29 @@
                             <textarea id="toolCodeInput" class="form-input" rows="4" placeholder="粘贴 Python, JS 或 HTML 代码..."></textarea>
                         </div>
                         <button class="btn btn-primary w-full" onclick="publishTool(event)">
-                            🚀 一键生成并发布
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                            一键生成并发布
                         </button>
                     </div>
                 </div>
                 <div class="create-right">
                     <div class="feature-list">
                         <div class="feature">
-                            <span class="feature-icon">✨</span>
+                            <span class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
                             <div>
                                 <strong>免部署，即刻生效</strong>
                                 <p>填写表单，立刻生成专属工具图纸，别人马上就能复制使用。</p>
                             </div>
                         </div>
                         <div class="feature">
-                            <span class="feature-icon">🌍</span>
+                            <span class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
                             <div>
                                 <strong>跨平台、跨语言</strong>
                                 <p>Python、JS、Bash，不管用什么语言写，只要 AI 看得懂就行。</p>
                             </div>
                         </div>
                         <div class="feature">
-                            <span class="feature-icon">📈</span>
+                            <span class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
                             <div>
                                 <strong>看到你的影响力</strong>
                                 <p>别人使用、修改你的工具，都会被记录下来，你的灵感在不断进化。</p>
@@ -193,7 +206,7 @@
         <div class="modal modal-small" id="aiModal">
             <button class="modal-close" id="aiModalClose">&times;</button>
             <div class="modal-body">
-                <h2 style="margin-bottom: 8px;">🚀 跳转到 AI 助手</h2>
+                <h2 style="margin-bottom: 8px;">跳转到 AI 助手</h2>
                 <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 24px;">工具图纸已复制！请选择您平时常用的 AI 并粘贴即可运行：</p>
                 <div class="ai-grid">
                     <a href="https://chatgpt.com/" target="_blank" class="ai-card" onclick="closeAiModal()">
@@ -222,7 +235,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <span class="logo-icon">⚡</span> VibeHub
+                    <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:text-bottom;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    VibeHub
                     <p>让每个人都能用自然语言解决生活中的小问题。</p>
                 </div>
                 <div class="footer-links">
