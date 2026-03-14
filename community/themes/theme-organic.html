@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeHub — Organic Warmth</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#faf6ef;--cream-dark:#f2ead8;--warm:#e8dcc8;
+  --bark:#3d2b1f;--bark-mid:#7a5c47;--bark-light:#a8876e;
+  --moss:#4a6741;--terracotta:#c4603a;--gold:#b89449;
+  --text:#2d1f14;--text-mid:#6b4f3a;--text-light:#9a7860;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* 纸质纹理 */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  opacity:0.8;
+}
+
+/* === 导航 === */
+nav{position:sticky;top:0;z-index:99;background:rgba(250,246,239,0.88);border-bottom:1px solid var(--warm);padding:20px 60px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px)}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:var(--bark);text-decoration:none;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+.nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--terracotta);display:inline-block}
+.nav-links{display:flex;gap:36px}
+.nav-links a{font-size:0.88rem;color:var(--text-mid);text-decoration:none;font-weight:400;transition:color 0.3s}
+.nav-links a:hover{color:var(--bark)}
+.nav-cta{padding:10px 24px;background:var(--terracotta);color:#fff;font-size:0.82rem;font-weight:500;text-decoration:none;border-radius:100px;transition:all 0.3s}
+.nav-cta:hover{background:var(--bark);transform:translateY(-1px)}
+
+/* === Hero === */
+.hero{position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;padding:100px 80px;max-width:1400px;margin:0 auto}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;width:100%}
+
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(180,148,73,0.12);color:var(--gold);padding:6px 14px;border-radius:100px;font-size:0.75rem;font-weight:500;margin-bottom:32px;letter-spacing:0.05em}
+.hero-tag::before{content:'✦';font-size:0.6rem}
+.hero-title{font-family:'Fraunces',serif;font-size:clamp(3.5rem,7vw,6rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:var(--bark);margin-bottom:12px}
+.hero-title em{font-style:italic;color:var(--terracotta)}
+.hero-title .wave{display:inline-block;position:relative}
+.hero-title .wave::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q30 0 60 6 Q90 12 120 6' stroke='%23c4603a' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% auto}
+.hero-sub{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:300;font-style:italic;color:var(--bark-light);margin-bottom:28px;line-height:1.5}
+.hero-desc{font-size:1rem;line-height:1.8;color:var(--text-mid);margin-bottom:48px;max-width:480px}
+.hero-desc strong{color:var(--bark);font-weight:500}
+
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-warm{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--terracotta);color:#fff;border-radius:100px;font-size:0.88rem;font-weight:500;text-decoration:none;transition:all 0.3s;box-shadow:0 8px 24px rgba(196,96,58,0.2)}
+.btn-warm:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(196,96,58,0.3)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border:1.5px solid var(--warm);color:var(--bark-mid);border-radius:100px;font-size:0.88rem;font-weight:400;text-decoration:none;transition:all 0.3s}
+.btn-ghost:hover{border-color:var(--bark-light);color:var(--bark)}
+
+/* 统计卡片 */
+.hero-stats{display:flex;gap:24px;margin-top:48px;padding-top:40px;border-top:1px solid var(--warm)}
+.stat-item{flex:1;text-align:center;padding:20px;background:rgba(255,255,255,0.6);border-radius:16px;border:1px solid var(--warm);backdrop-filter:blur(8px)}
+.stat-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--bark);letter-spacing:-0.03em;margin-bottom:4px}
+.stat-label{font-size:0.72rem;color:var(--text-light);letter-spacing:0.05em;text-transform:uppercase;font-weight:500}
+
+/* 右侧插画/代码预览 */
+.hero-visual{position:relative}
+.visual-card{background:#fff;border-radius:20px;padding:32px;box-shadow:0 20px 60px rgba(61,43,31,0.12),0 4px 16px rgba(61,43,31,0.06);border:1px solid var(--warm);position:relative}
+.visual-card::before{content:'';position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:radial-gradient(circle,rgba(196,96,58,0.12),transparent 70%);border-radius:50%}
+.vc-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--cream-dark)}
+.vc-dot{width:10px;height:10px;border-radius:50%}
+.vd-r{background:#ff8376}.vd-y{background:#ffc053}.vd-g{background:#6fd464}
+.vc-filename{font-family:'DM Sans',sans-serif;font-size:0.72rem;color:var(--text-light);margin-left:auto;letter-spacing:0.05em}
+.vc-body{display:flex;flex-direction:column;gap:12px}
+.vc-line{display:flex;align-items:start;gap:12px}
+.vc-icon{font-size:1.4rem;flex-shrink:0}
+.vc-text{font-size:0.82rem;line-height:1.5;color:var(--text-mid)}
+.vc-text strong{color:var(--bark);font-family:'Fraunces',serif;font-style:italic;font-size:0.95rem}
+.vc-tag{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:0.65rem;font-weight:500;margin-top:6px}
+.tag-m{background:#e8f5e4;color:var(--moss)}.tag-o{background:#fef3ee;color:var(--terracotta)}
+
+/* 手绘装饰 */
+.doodle-1{position:absolute;top:-30px;left:-40px;font-size:2rem;transform:rotate(-15deg);opacity:0.4;z-index:-1}
+.doodle-2{position:absolute;bottom:-20px;right:-30px;font-size:1.5rem;transform:rotate(10deg);opacity:0.3;z-index:-1}
+
+/* === 工具区 === */
+.section{position:relative;z-index:10;padding:100px 80px;max-width:1400px;margin:0 auto}
+.sec-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,103,65,0.1);color:var(--moss);padding:5px 12px;border-radius:100px;font-size:0.7rem;font-weight:500;margin-bottom:16px;letter-spacing:0.05em}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-0.03em;color:var(--bark);margin-bottom:8px}
+.sec-sub{font-size:0.95rem;color:var(--text-mid);margin-bottom:60px;max-width:480px;line-height:1.6}
+
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tool-card{background:#fff;border-radius:20px;padding:28px;border:1px solid var(--warm);box-shadow:0 4px 16px rgba(61,43,31,0.06);transition:all 0.4s;cursor:pointer;overflow:hidden;position:relative}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terracotta),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform 0.4s}
+.tool-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(61,43,31,0.12);border-color:var(--bark-light)}
+.tool-card:hover::before{transform:scaleX(1)}
+.card-icon{width:52px;height:52px;border-radius:14px;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:18px;border:1px solid var(--warm)}
+.card-ctag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:0.62rem;font-weight:500;margin-bottom:12px}
+.ctag-life{background:#fef3ee;color:var(--terracotta)}.ctag-dev{background:#e8f5e4;color:var(--moss)}.ctag-fun{background:#fef9e6;color:var(--gold)}
+.card-title{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;color:var(--bark);margin-bottom:10px;letter-spacing:-0.01em}
+.card-vibe{font-size:0.82rem;line-height:1.65;color:var(--text-mid);margin-bottom:18px;font-style:italic}
+.card-meta{display:flex;gap:16px;font-size:0.68rem;color:var(--text-light);font-weight:500}
+
+/* === 创建区 === */
+.create-section{position:relative;z-index:10;padding:100px 80px;background:var(--cream-dark);border-top:1px solid var(--warm);border-bottom:1px solid var(--warm)}
+.create-inner{max-width:700px;margin:0 auto;text-align:center}
+.create-inner h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--bark);letter-spacing:-0.03em;margin-bottom:16px}
+.create-inner h2 em{font-style:italic;color:var(--terracotta)}
+.create-inner p{font-size:0.95rem;line-height:1.7;color:var(--text-mid);margin-bottom:40px}
+.code-card{background:#fff;border-radius:16px;padding:0;border:1px solid var(--warm);box-shadow:0 8px 24px rgba(61,43,31,0.08);margin-bottom:36px;text-align:left;overflow:hidden}
+.code-top{padding:12px 20px;background:var(--cream-dark);border-bottom:1px solid var(--warm);display:flex;align-items:center;gap:8px}
+.code-top .vd-r,.code-top .vd-y,.code-top .vd-g{width:10px;height:10px;border-radius:50%}
+.code-top span{font-size:0.65rem;color:var(--text-light);margin-left:auto;letter-spacing:0.05em}
+.code-body{padding:20px 24px;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--bark-mid)}
+.code-body .comment{color:var(--text-light);font-style:italic}
+.code-body .cmd{color:var(--bark)}
+
+footer{position:relative;z-index:10;padding:40px 80px;border-top:1px solid var(--warm);display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--bark);letter-spacing:-0.02em}
+.footer-copy{font-size:0.75rem;color:var(--text-light)}
+
+/* 入场动画 */
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{animation:rise 0.6s ease forwards}
+.hero-title{animation:rise 0.6s 0.15s ease both}
+.hero-sub{animation:rise 0.6s 0.3s ease both}
+.hero-desc{animation:rise 0.6s 0.45s ease both}
+.hero-btns{animation:rise 0.6s 0.6s ease both}
+.hero-stats{animation:rise 0.6s 0.75s ease both}
+.hero-visual{animation:rise 0.8s 0.2s ease both}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo"><span class="dot"></span>VibeHub</a>
+  <div class="nav-links">
+    <a href="#tools">发现工具</a>
+    <a href="#how">工作原理</a>
+    <a href="#create">创建图纸</a>
+  </div>
+  <a href="#create" class="nav-cta">开始创作 →</a>
+</nav>
+
+<section style="position:relative;z-index:10;padding-top:60px">
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">✦ 自然语言编程的新范式</div>
+      <h1 class="hero-title">一句话，<br><em>创造</em>你的<br><span class="wave">工具</span></h1>
+      <p class="hero-sub">The tool garden for everyone.</p>
+      <p class="hero-desc">
+        在 VibeHub，你只需用一句话说出你想解决什么问题。<br>
+        AI 将它变为一篇 <strong>.vibe.md 图纸</strong>——人人都能看懂、修改、传播的数字蓝图。
+      </p>
+      <div class="hero-btns">
+        <a href="#tools" class="btn-warm">浏览工具库 →</a>
+        <a href="#how" class="btn-ghost">了解更多</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">1,247</div><div class="stat-label">工具图纸</div></div>
+        <div class="stat-item"><div class="stat-num">8,934</div><div class="stat-label">次 Fork</div></div>
+        <div class="stat-item"><div class="stat-num">362</div><div class="stat-label">创造者</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="doodle-1">🌿</div>
+      <div class="visual-card">
+        <div class="vc-header">
+          <div class="vc-dot vd-r"></div><div class="vc-dot vd-y"></div><div class="vc-dot vd-g"></div>
+          <div class="vc-filename">svc_spider.vibe.md</div>
+        </div>
+        <div class="vc-body">
+          <div class="vc-line">
+            <div class="vc-icon">🕷️</div>
+            <div class="vc-text"><strong>SVC Spider</strong><br>多服务器织网 VS Code 插件</div>
+          </div>
+          <div style="padding:12px;background:var(--cream);border-radius:10px;border-left:3px solid var(--terracotta);font-size:0.78rem;font-style:italic;color:var(--text-mid);line-height:1.6">"我每天要在3-4台GPU服务器之间切换，想要一个像蜘蛛结网一样的插件..."</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+            <span class="vc-tag tag-m">VS Code Extension</span>
+            <span class="vc-tag tag-o">TypeScript</span>
+          </div>
+          <div style="font-size:0.7rem;color:var(--text-light);padding-top:8px;border-top:1px solid var(--cream-dark)">🔀 Direct Fork: 7 · 🌳 Indirect Fork: 18</div>
+        </div>
+      </div>
+      <div class="doodle-2">🌱</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="tools">
+  <div class="sec-badge">🔥 社区精选</div>
+  <h2 class="sec-title">热门工具图纸</h2>
+  <p class="sec-sub">每一个都是一篇纯文本。复制、粘贴、丢给 AI，即刻拥有。</p>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="card-icon">🕷️</div><span class="card-ctag ctag-dev">开发辅助</span><h3 class="card-title">SVC Spider 多服务器织网插件</h3><p class="card-vibe">"我每天要在3-4台GPU服务器之间来回切换，想要一个像蜘蛛结网一样的VS Code插件。"</p><div class="card-meta"><span>🔀 Fork 25</span><span>📅 2026-03</span></div></div>
+    <div class="tool-card"><div class="card-icon">��</div><span class="card-ctag ctag-life">生活效率</span><h3 class="card-title">番茄工作法锁屏助手</h3><p class="card-vibe">"我总是控制不住自己玩手机，每工作25分钟就弹出全屏提醒休息5分钟。"</p><div class="card-meta"><span>🔀 Fork 46</span><span>📅 2026-03</span></div></div>
+    <div class="tool-card"><div class="card-icon">📸</div><span class="card-ctag ctag-life">生活效率</span><h3 class="card-title">照片批量整理器</h3><p class="card-vibe">"手机里几千张照片文件名全是乱码，我想按年月自动分到不同文件夹并重命名。"</p><div class="card-meta"><span>🔀 Fork 95</span><span>📅 2026-03</span></div></div>
+    <div class="tool-card"><div class="card-icon">📶</div><span class="card-ctag ctag-life">生活效率</span><h3 class="card-title">WiFi 测速小助手</h3><p class="card-vibe">"每次感觉网速很慢但不知道是不是错觉，打开就能测当前网速。"</p><div class="card-meta"><span>🔀 Fork 157</span><span>📅 2026-03</span></div></div>
+    <div class="tool-card"><div class="card-icon">📝</div><span class="card-ctag ctag-dev">开发辅助</span><h3 class="card-title">Git 提交消息生成器</h3><p class="card-vibe">"我每次 git commit 都不知道写什么好，想要一个工具自动分析我改了什么文件。"</p><div class="card-meta"><span>🔀 Fork 60</span><span>📅 2026-03</span></div></div>
+    <div class="tool-card"><div class="card-icon">💰</div><span class="card-ctag ctag-life">生活效率</span><h3 class="card-title">极简记账本</h3><p class="card-vibe">"不想装任何记账App，就想要最简单的命令行工具，输入金额和备注就行。"</p><div class="card-meta"><span>🔀 Fork 122</span><span>📅 2026-03</span></div></div>
+  </div>
+</section>
+
+<section class="create-section" id="create">
+  <div class="create-inner">
+    <h2>创建你的第一个<br><em>Vibe 工具</em></h2>
+    <p>只需一行命令，把你的代码和想法变成人人可传播的图纸。<br>或者，更简单——直接告诉你的 AI："帮我整理成 .vibe.md 格式"。</p>
+    <div class="code-card">
+      <div class="code-top">
+        <div class="vd-r"></div><div class="vd-y"></div><div class="vd-g"></div>
+        <span>Terminal</span>
+      </div>
+      <div class="code-body">
+        <div class="comment"># 一行命令生成图纸</div>
+        <div class="cmd">$ python vibe_export.py "我写了一个番茄钟" app.py</div>
+        <div style="color:var(--moss);margin-top:8px">✓ output/pomodoro.vibe.md 已生成</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;justify-content:center">
+      <a href="#" class="btn-warm">立即开始 →</a>
+      <a href="#" class="btn-ghost">查看文档</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">🌿 VibeHub</div>
+  <div class="footer-copy">© 2026 VibeHub · 开源 · 人人皆可编程</div>
+  <div style="font-size:0.75rem;color:var(--text-light)">GitHub · 关于 · 文档</div>
+</footer>
+
+</body>
+</html>

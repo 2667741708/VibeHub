@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeHub — Cyberpunk Neon</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --void:#050508;--neon-green:#00ffa3;--neon-pink:#ff006e;
+  --neon-blue:#00d4ff;--neon-yellow:#ffe600;
+  --panel:rgba(0,255,163,0.03);--border:rgba(0,255,163,0.2);
+  --text:#c8fae8;--text-dim:rgba(200,250,232,0.45);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Share Tech Mono',monospace;background:var(--void);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(0,255,163,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,163,0.04) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none}
+body::after{content:'';position:fixed;inset:0;z-index:1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.12) 2px,rgba(0,0,0,0.12) 4px);
+  pointer-events:none}
+
+.corner-tl,.corner-tr,.corner-bl,.corner-br{position:fixed;width:50px;height:50px;z-index:200;pointer-events:none}
+.corner-tl{top:16px;left:16px;border-top:2px solid var(--neon-green);border-left:2px solid var(--neon-green)}
+.corner-tr{top:16px;right:16px;border-top:2px solid var(--neon-green);border-right:2px solid var(--neon-green)}
+.corner-bl{bottom:16px;left:16px;border-bottom:2px solid var(--neon-green);border-left:2px solid var(--neon-green)}
+.corner-br{bottom:16px;right:16px;border-bottom:2px solid var(--neon-green);border-right:2px solid var(--neon-green)}
+
+.status-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,8,0.9);border-bottom:1px solid var(--border);padding:8px 30px;display:flex;justify-content:space-between;align-items:center;font-size:0.63rem;letter-spacing:0.15em;backdrop-filter:blur(10px)}
+.sig{color:var(--neon-green)}.sys{color:var(--text-dim)}.alert{color:var(--neon-pink);animation:blink 1.2s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+nav{position:sticky;top:33px;z-index:99;background:rgba(5,5,8,0.85);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);padding:0 40px;display:flex;align-items:center;gap:60px}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:900;color:var(--neon-green);text-shadow:0 0 20px var(--neon-green),0 0 40px rgba(0,255,163,0.3);text-decoration:none;padding:18px 0;letter-spacing:0.1em}
+.nav-links{display:flex;gap:0;flex:1}
+.nav-links a{padding:18px 22px;font-size:0.63rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;border-left:1px solid rgba(0,255,163,0.08);transition:all 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--neon-green);transform:scaleX(0);transition:transform 0.3s}
+.nav-links a:hover{color:var(--neon-green);background:rgba(0,255,163,0.04)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-enter{margin-left:auto;padding:8px 20px;border:1px solid var(--neon-pink);color:var(--neon-pink);font-size:0.63rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;background:rgba(255,0,110,0.08);transition:all 0.3s;text-shadow:0 0 10px rgba(255,0,110,0.5)}
+.nav-enter:hover{background:var(--neon-pink);color:var(--void);box-shadow:0 0 30px rgba(255,0,110,0.5);text-shadow:none}
+
+.hero{position:relative;z-index:10;min-height:calc(100vh - 70px);padding:80px 60px;display:flex;align-items:center}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 380px;gap:80px;align-items:center}
+
+.system-line{font-size:0.63rem;letter-spacing:0.2em;color:var(--neon-green);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.system-line::before{content:'▶';animation:blink 0.8s step-end infinite}
+.hero-title{font-family:'Orbitron',monospace;font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:1;color:var(--neon-green);text-shadow:0 0 30px var(--neon-green),0 0 60px rgba(0,255,163,0.3);margin-bottom:8px;letter-spacing:0.05em}
+.hero-sub{font-family:'Orbitron',monospace;font-size:clamp(1rem,2.5vw,1.6rem);font-weight:400;color:var(--neon-pink);text-shadow:0 0 20px var(--neon-pink);margin-bottom:32px;letter-spacing:0.1em}
+.hero-desc{font-size:0.82rem;line-height:1.8;color:var(--text-dim);letter-spacing:0.05em;max-width:540px;margin-bottom:40px;border-left:2px solid var(--neon-green);padding-left:20px}
+.hero-desc em{color:var(--neon-green);font-style:normal}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-neon{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;font-family:'Orbitron',monospace;background:transparent;border:1px solid var(--neon-green);color:var(--neon-green);text-shadow:0 0 10px var(--neon-green);box-shadow:0 0 20px rgba(0,255,163,0.15),inset 0 0 20px rgba(0,255,163,0.05);transition:all 0.3s}
+.btn-neon:hover{background:rgba(0,255,163,0.1);box-shadow:0 0 40px rgba(0,255,163,0.4),inset 0 0 20px rgba(0,255,163,0.1);transform:translateY(-2px)}
+.btn-neon.blue{border-color:var(--neon-blue);color:var(--neon-blue);text-shadow:0 0 10px var(--neon-blue);box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 0 20px rgba(0,212,255,0.05)}
+.btn-neon.blue:hover{background:rgba(0,212,255,0.08);box-shadow:0 0 40px rgba(0,212,255,0.35)}
+
+.hero-panel{border:1px solid var(--border);background:var(--panel);padding:0;position:relative}
+.hero-panel::before{content:'SYS STATS';position:absolute;top:-10px;left:20px;font-size:0.58rem;letter-spacing:0.2em;color:var(--neon-green);background:var(--void);padding:0 8px}
+.panel-row{padding:20px 24px;border-bottom:1px solid rgba(0,255,163,0.08);display:flex;justify-content:space-between;align-items:center}
+.panel-label{font-size:0.58rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase}
+.panel-bar{height:4px;background:rgba(0,255,163,0.1);margin-top:8px}
+.panel-fill{height:100%;background:var(--neon-green);box-shadow:0 0 10px var(--neon-green);animation:pulse 2s ease-in-out infinite alternate}
+@keyframes pulse{from{opacity:0.6}to{opacity:1}}
+.panel-value{font-family:'VT323',monospace;font-size:2rem;color:var(--neon-green);text-shadow:0 0 15px var(--neon-green)}
+.pv-pink{color:var(--neon-pink);text-shadow:0 0 15px var(--neon-pink)}
+.pv-blue{color:var(--neon-blue);text-shadow:0 0 15px var(--neon-blue)}
+
+.tools-section{position:relative;z-index:10;padding:80px 60px;border-top:1px solid var(--border)}
+.sec-tag{font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--neon-pink);margin-bottom:8px}
+.sec-tag::before{content:'[ '}.sec-tag::after{content:' ]'}
+.sec-title{font-family:'Orbitron',monospace;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:900;color:var(--text);letter-spacing:0.05em;margin-bottom:48px}
+.sec-title span{color:var(--neon-green);text-shadow:0 0 20px var(--neon-green)}
+
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tool-card{border:1px solid var(--border);padding:28px;background:var(--panel);position:relative;transition:all 0.3s;cursor:pointer;overflow:hidden}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--neon-green),var(--neon-blue));transform:scaleX(0);transition:transform 0.4s;transform-origin:left}
+.tool-card:hover{border-color:rgba(0,255,163,0.5);background:rgba(0,255,163,0.04);box-shadow:0 0 30px rgba(0,255,163,0.1)}
+.tool-card:hover::before{transform:scaleX(1)}
+.card-id{font-size:0.53rem;letter-spacing:0.25em;color:var(--neon-green);opacity:0.5;margin-bottom:16px;display:flex;justify-content:space-between}
+.card-emoji{font-size:2rem;margin-bottom:12px}
+.card-title{font-family:'Orbitron',monospace;font-size:0.82rem;color:var(--text);margin-bottom:12px;font-weight:700;letter-spacing:0.03em}
+.card-vibe{font-size:0.76rem;line-height:1.7;color:var(--text-dim);margin-bottom:20px}
+.card-meta{display:flex;gap:16px;font-size:0.58rem;letter-spacing:0.1em;color:var(--neon-green);opacity:0.6}
+
+.create-section{position:relative;z-index:10;padding:80px 60px;border-top:1px solid var(--border);background:rgba(0,255,163,0.015)}
+.create-inner{max-width:800px;margin:0 auto;text-align:center}
+.create-inner h2{font-family:'Orbitron',monospace;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--text);margin-bottom:12px}
+.create-inner h2 span{color:var(--neon-green);text-shadow:0 0 20px var(--neon-green)}
+.create-inner p{font-size:0.82rem;line-height:1.7;color:var(--text-dim);margin-bottom:40px}
+.terminal{background:#000;border:1px solid var(--neon-green);box-shadow:0 0 30px rgba(0,255,163,0.15);margin-bottom:40px;text-align:left}
+.terminal-bar{padding:10px 16px;border-bottom:1px solid rgba(0,255,163,0.2);display:flex;align-items:center;gap:8px}
+.td{width:10px;height:10px;border-radius:50%}
+.td1{background:var(--neon-pink);box-shadow:0 0 8px var(--neon-pink)}
+.td2{background:var(--neon-yellow);box-shadow:0 0 8px var(--neon-yellow)}
+.td3{background:var(--neon-green);box-shadow:0 0 8px var(--neon-green)}
+.t-title{font-size:0.6rem;letter-spacing:0.15em;color:var(--text-dim);margin-left:auto}
+.terminal-body{padding:24px 28px}
+.t-line{font-size:0.82rem;line-height:1.8}
+.t-prompt{color:var(--neon-green)}.t-cmd{color:var(--text)}.t-out{color:var(--text-dim)}.t-ok{color:var(--neon-green)}
+.blink{animation:blink 0.8s step-end infinite}
+
+footer{position:relative;z-index:10;border-top:1px solid var(--border);background:rgba(5,5,8,0.95);padding:32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--neon-green);text-shadow:0 0 15px var(--neon-green)}
+.footer-sys{font-size:0.58rem;letter-spacing:0.15em;color:var(--text-dim)}
+</style>
+</head>
+<body>
+<div class="corner-tl"></div><div class="corner-tr"></div>
+<div class="corner-bl"></div><div class="corner-br"></div>
+
+<div class="status-bar">
+  <span class="sig">▶ VIBEHUB_OS v1.0 // ONLINE</span>
+  <span class="sys">NODES: 1,247 // FORKS: 8,934 // CREATORS: 362</span>
+  <span class="alert">● LIVE</span>
+</div>
+
+<nav>
+  <a href="#" class="nav-logo">VIBE_HUB</a>
+  <div class="nav-links">
+    <a href="#tools">DISCOVER</a>
+    <a href="#create">DEPLOY</a>
+    <a href="#">COMMUNITY</a>
+  </div>
+  <a href="#" class="nav-enter">INIT →</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="system-line">SYSTEM_READY // NATURAL_LANG_ENGINE_INIT</div>
+      <h1 class="hero-title">VIBE<br>HUB</h1>
+      <p class="hero-sub">// 一句话，创造工具</p>
+      <p class="hero-desc">
+        在 VibeHub，你只需 <em>一句话</em> 说出你想解决的问题。<br>
+        AI 将它编译为一篇 .vibe.md 图纸——<br>
+        可复制、可传播、可无限 Fork。
+      </p>
+      <div class="hero-btns">
+        <a href="#tools" class="btn-neon">EXPLORE ▶</a>
+        <a href="#create" class="btn-neon blue">DEPLOY</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-row">
+        <div><div class="panel-label">Tools Online</div><div class="panel-bar"><div class="panel-fill" style="width:73%"></div></div></div>
+        <div class="panel-value" id="v1">1247</div>
+      </div>
+      <div class="panel-row">
+        <div><div class="panel-label">Total Forks</div><div class="panel-bar"><div class="panel-fill" style="width:89%;background:var(--neon-pink);box-shadow:0 0 10px var(--neon-pink)"></div></div></div>
+        <div class="panel-value pv-pink" id="v2">8934</div>
+      </div>
+      <div class="panel-row" style="border:none">
+        <div><div class="panel-label">Creators</div><div class="panel-bar"><div class="panel-fill" style="width:42%;background:var(--neon-blue);box-shadow:0 0 10px var(--neon-blue)"></div></div></div>
+        <div class="panel-value pv-blue" id="v3">362</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tools-section" id="tools">
+  <div class="sec-tag">Featured Blueprints</div>
+  <div class="sec-title">热门 <span>_TOOLS</span></div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="card-id"><span>ID::0001</span><span>DEV</span></div><div class="card-emoji">🕷️</div><h3 class="card-title">SVC SPIDER</h3><p class="card-vibe">"我每天要在3-4台GPU服务器之间来回切换，想要一个像蜘蛛结网一样的VS Code插件。"</p><div class="card-meta"><span>FORK:25</span><span>VS_CODE_EXT</span></div></div>
+    <div class="tool-card"><div class="card-id"><span>ID::0002</span><span>LIFE</span></div><div class="card-emoji">🍅</div><h3 class="card-title">POMODORO GUARD</h3><p class="card-vibe">"我总是控制不住自己玩手机，每工作25分钟就弹出全屏提醒休息5分钟。"</p><div class="card-meta"><span>FORK:46</span><span>PYTHON</span></div></div>
+    <div class="tool-card"><div class="card-id"><span>ID::0003</span><span>LIFE</span></div><div class="card-emoji">📸</div><h3 class="card-title">PHOTO SORTER</h3><p class="card-vibe">"手机里几千张照片全是乱码，我想按年月自动分到不同文件夹并重命名。"</p><div class="card-meta"><span>FORK:95</span><span>PYTHON</span></div></div>
+    <div class="tool-card"><div class="card-id"><span>ID::0004</span><span>LIFE</span></div><div class="card-emoji">📶</div><h3 class="card-title">WIFI PROBE</h3><p class="card-vibe">"每次感觉网速很慢但不知道是不是错觉，打开就能测当前网速。"</p><div class="card-meta"><span>FORK:157</span><span>BASH</span></div></div>
+    <div class="tool-card"><div class="card-id"><span>ID::0005</span><span>DEV</span></div><div class="card-emoji">📝</div><h3 class="card-title">GIT MSG GEN</h3><p class="card-vibe">"我每次 git commit 都不知道写什么好，想要自动分析改动生成message。"</p><div class="card-meta"><span>FORK:60</span><span>PYTHON</span></div></div>
+    <div class="tool-card"><div class="card-id"><span>ID::0006</span><span>LIFE</span></div><div class="card-emoji">💰</div><h3 class="card-title">MINIMAL LEDGER</h3><p class="card-vibe">"不想装任何记账App，就想要最简单的命令行工具，输入金额和备注。"</p><div class="card-meta"><span>FORK:122</span><span>PYTHON</span></div></div>
+  </div>
+</section>
+
+<section class="create-section" id="create">
+  <div class="create-inner">
+    <div class="sec-tag" style="justify-content:center;display:flex">DEPLOY YOUR FIRST TOOL</div>
+    <h2 style="margin-bottom:12px">创建你的 <span>VIBE</span></h2>
+    <p>只需一行命令，把你的代码和意图编译为一篇永恒的 .vibe.md 图纸。</p>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="td td1"></div><div class="td td2"></div><div class="td td3"></div>
+        <div class="t-title">VIBE_ENGINE v1.0 — terminal</div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">user@vibehub:~$ </span><span class="t-cmd">python vibe_export.py "我写了一个番茄钟" app.py</span></div>
+        <div class="t-line"><span class="t-out">● Scanning source files...</span></div>
+        <div class="t-line"><span class="t-out">● Generating blueprint...</span></div>
+        <div class="t-line t-ok">✓ output/pomodoro.vibe.md (2.3KB) — READY TO SHARE</div>
+        <div class="t-line"><span class="t-prompt">user@vibehub:~$ </span><span class="blink t-ok">█</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;justify-content:center">
+      <a href="#" class="btn-neon">DEPLOY NOW ▶</a>
+      <a href="#" class="btn-neon blue">READ DOCS</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">VIBE_HUB</div>
+  <div class="footer-sys">SYS: ONLINE // OPEN_SOURCE // BUILD: 2026.03.14</div>
+  <div style="font-size:0.58rem;letter-spacing:0.15em;color:var(--text-dim)">GITHUB // ABOUT // DOCS</div>
+</footer>
+
+<script>
+['v1','v2','v3'].forEach((id,i)=>{
+  const el=document.getElementById(id);
+  const target=parseInt(el.textContent);
+  const start=performance.now();
+  function tick(now){
+    const p=Math.min((now-start)/2000,1);
+    el.textContent=Math.round(target*(1-Math.pow(1-p,3))).toLocaleString();
+    if(p<1)requestAnimationFrame(tick);
+  }
+  setTimeout(()=>requestAnimationFrame(tick),i*200);
+});
+</script>
+</body>
+</html>

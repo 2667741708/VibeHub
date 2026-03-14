@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeHub — Editorial Press</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #0a0a0a;
+  --paper: #f5f0e8;
+  --paper-dark: #ede7d9;
+  --red: #c0392b;
+  --ink-faint: rgba(10,10,10,0.1);
+  --ink-mid: rgba(10,10,10,0.4);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Libre Baskerville', serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 报纸纹理 */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Crect x='0' y='0' width='1' height='1' fill='rgba(0,0,0,0.02)'/%3E%3C/svg%3E");
+  background-size: 4px 4px;
+  pointer-events: none;
+}
+
+/* 顶部装饰条 */
+.press-bar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 60px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  display: flex; justify-content: space-between;
+  position: relative; z-index: 100;
+}
+
+/* === 导航 === */
+nav {
+  position: sticky; top: 0; z-index: 99;
+  background: var(--paper);
+  border-bottom: 3px solid var(--ink);
+}
+.nav-top {
+  padding: 20px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--ink-faint);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 900;
+  letter-spacing: -0.02em; color: var(--ink);
+  text-decoration: none; line-height: 1;
+}
+.nav-logo span { color: var(--red); }
+.nav-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; color: var(--ink-mid);
+  letter-spacing: 0.1em;
+}
+.nav-bottom {
+  padding: 10px 60px;
+  display: flex; gap: 0;
+}
+.nav-bottom a {
+  padding: 6px 20px; font-size: 0.75rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  border-right: 1px solid var(--ink-faint);
+  transition: all 0.2s;
+}
+.nav-bottom a:first-child { padding-left: 0; }
+.nav-bottom a:hover { background: var(--ink); color: var(--paper); }
+
+/* === Hero === */
+.hero {
+  position: relative; z-index: 10;
+  padding: 80px 60px 60px;
+  max-width: 1400px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0 60px;
+  align-items: start;
+}
+
+/* 巨型标题区 */
+.hero-headline {
+  grid-column: 1; grid-row: 1;
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 40px; margin-bottom: 40px;
+}
+.hero-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-kicker::before { content: '■'; font-size: 0.5rem; }
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900; line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: 20px;
+}
+.hero-h1 em { font-style: italic; color: var(--red); }
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-style: italic; color: var(--ink-mid);
+  font-weight: 400;
+}
+
+/* 右侧侧边栏 */
+.hero-aside {
+  grid-column: 2; grid-row: 1 / 3;
+  width: 280px;
+  border-left: 3px solid var(--ink);
+  padding-left: 40px;
+  padding-top: 0;
+}
+.aside-stat {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--ink-faint);
+  text-align: center;
+}
+.aside-stat:first-child { padding-top: 0; }
+.aside-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem; font-weight: 900; line-height: 1;
+  color: var(--ink); margin-bottom: 4px;
+}
+.aside-num span { color: var(--red); }
+.aside-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ink-mid);
+}
+.aside-cta {
+  margin-top: 28px;
+  display: block; background: var(--ink); color: var(--paper);
+  padding: 14px 20px; text-align: center;
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  text-decoration: none; transition: background 0.2s;
+}
+.aside-cta:hover { background: var(--red); }
+
+/* 导言 */
+.hero-body {
+  grid-column: 1; grid-row: 2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+.hero-lead {
+  font-size: 1.05rem; line-height: 1.75;
+  border-top: 1px solid var(--ink);
+  padding-top: 20px;
+}
+.hero-lead::first-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; font-weight: 900; line-height: 0.8;
+  float: left; margin: 0 12px 0 0;
+  color: var(--red);
+}
+.hero-lead-2 {
+  font-size: 0.88rem; line-height: 1.75; color: var(--ink-mid);
+  border-top: 1px solid var(--ink); padding-top: 20px;
+}
+
+/* 分隔装饰 */
+.rule { border: none; border-top: 1px solid var(--ink); margin: 0; }
+.rule-thick { border-top-width: 3px; }
+.rule-double { border-top: 3px double var(--ink); }
+
+/* === 工具区 === */
+.tools-section {
+  position: relative; z-index: 10;
+  padding: 60px;
+  max-width: 1400px; margin: 0 auto;
+  border-top: 3px solid var(--ink);
+}
+.section-header {
+  display: flex; align-items: baseline; gap: 24px; margin-bottom: 48px;
+}
+.section-head-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900;
+}
+.section-head-line { flex: 1; height: 3px; background: var(--ink); }
+
+/* 报纸式网格 */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0;
+  border: 1px solid var(--ink);
+}
+.tool-card {
+  padding: 32px 28px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+  transition: background 0.2s;
+}
+.tool-card:hover { background: var(--paper-dark); }
+.tool-card.featured { grid-row: 1 / 3; }
+.tool-card:last-child, .tool-card:nth-child(3) { border-right: none; }
+
+.card-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--ink); color: var(--paper);
+  display: inline-block; padding: 3px 8px; margin-bottom: 16px;
+}
+.card-tag.red { background: var(--red); }
+.card-emoji { font-size: 2rem; margin-bottom: 12px; }
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; line-height: 1.2;
+  margin-bottom: 12px;
+}
+.tool-card.featured .card-title {
+  font-size: 2rem; margin-bottom: 20px;
+}
+.card-vibe {
+  font-size: 0.88rem; line-height: 1.6; color: var(--ink-mid);
+  font-style: italic;
+}
+.tool-card.featured .card-vibe { font-size: 1rem; }
+.card-meta {
+  margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--ink-faint);
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; color: var(--ink-mid);
+}
+.card-arrow {
+  position: absolute; bottom: 20px; right: 20px;
+  font-size: 1.5rem; color: var(--ink-mid);
+  transition: all 0.2s;
+}
+.tool-card:hover .card-arrow { color: var(--red); transform: translate(4px, -4px); }
+
+/* === 创建区 === */
+.create-section {
+  position: relative; z-index: 10;
+  padding: 60px; max-width: 1400px; margin: 0 auto;
+  border-top: 3px double var(--ink);
+}
+.create-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: start;
+}
+.create-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; font-weight: 900; line-height: 1.1;
+  margin-bottom: 20px;
+}
+.create-left h2 em { font-style: italic; color: var(--red); }
+.create-left p { font-size: 1rem; line-height: 1.7; color: var(--ink-mid); }
+.code-block {
+  background: var(--ink); color: var(--paper);
+  padding: 32px 36px;
+  font-family: 'Space Mono', monospace; font-size: 0.9rem;
+  position: relative; margin-top: 28px;
+}
+.code-block::before {
+  content: '$ VIBE ENGINE v1.0';
+  display: block; font-size: 0.6rem; letter-spacing: 0.15em;
+  color: rgba(245,240,232,0.4); margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,240,232,0.1);
+}
+.btn-press {
+  display: inline-block; margin-top: 24px;
+  background: var(--red); color: var(--paper);
+  padding: 14px 36px;
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none; transition: background 0.2s;
+}
+.btn-press:hover { background: var(--ink); }
+
+.create-right {
+  border-left: 2px solid var(--ink); padding-left: 40px;
+}
+.feature-item {
+  padding: 20px 0; border-bottom: 1px solid var(--ink-faint);
+  display: flex; gap: 16px; align-items: start;
+}
+.feature-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 900;
+  color: var(--red); line-height: 1; flex-shrink: 0; width: 48px;
+}
+.feature-text strong { font-family: 'Playfair Display', serif; font-size: 0.95rem; display: block; margin-bottom: 4px; }
+.feature-text p { font-size: 0.82rem; line-height: 1.5; color: var(--ink-mid); }
+
+/* === Footer === */
+footer {
+  background: var(--ink); color: var(--paper);
+  padding: 40px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 10;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 900;
+}
+.footer-logo span { color: #c0392b; }
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(245,240,232,0.4);
+}
+
+/* 入场动画 */
+@keyframes press-in {
+  from { opacity: 0; transform: translateY(20px) rotate(-0.5deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+.hero-h1 { animation: press-in 0.8s ease forwards; }
+.hero-sub { animation: press-in 0.8s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<!-- 顶部细条 -->
+<div class="press-bar">
+  <span>VIBEHUB DAILY · 人人皆可编程</span>
+  <span>Issue #001 · MARCH 2026</span>
+  <span>Open Source · Free Forever</span>
+</div>
+
+<!-- 导航 -->
+<nav>
+  <div class="nav-top">
+    <a href="#" class="nav-logo">Vibe<span>Hub</span></a>
+    <div class="nav-date">Saturday, March 14, 2026 · 北京时间 11:01</div>
+    <a href="#create" style="background:var(--red);color:white;padding:10px 24px;font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;text-decoration:none;text-transform:uppercase;">开始创作 →</a>
+  </div>
+  <div class="nav-bottom">
+    <a href="#">工具图纸</a>
+    <a href="#">创作方法</a>
+    <a href="#">社区</a>
+    <a href="#">关于</a>
+    <a href="#">GitHub</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <!-- 大标题 -->
+  <div class="hero-headline">
+    <div class="hero-kicker">Breaking · 自然语言编程新范式</div>
+    <h1 class="hero-h1">一句话，<br><em>创造</em><br>你的工具</h1>
+    <p class="hero-sub">The Garden of Forking Tools — 工具无限分叉的社区</p>
+  </div>
+
+  <!-- 侧边栏 -->
+  <aside class="hero-aside">
+    <div class="aside-stat">
+      <div class="aside-num">1,247</div>
+      <div class="aside-label">Tool Blueprints</div>
+    </div>
+    <div class="aside-stat">
+      <div class="aside-num"><span>8</span>,934</div>
+      <div class="aside-label">Times Forked</div>
+    </div>
+    <div class="aside-stat">
+      <div class="aside-num">362</div>
+      <div class="aside-label">Creators</div>
+    </div>
+    <a href="#tools" class="aside-cta">探索图纸库 →</a>
+  </aside>
+
+  <!-- 导言 -->
+  <div class="hero-body">
+    <p class="hero-lead">
+      在 VibeHub，你只需用一句话说出你想解决什么问题。AI 会将它变为一篇人人都能看懂、修改、传播的图纸（.vibe.md）——它既是说明书，也是源码。
+    </p>
+    <p class="hero-lead-2">
+      没有编程经验？没关系。VibeHub 相信每一个人都有改变自己生活的能力。复制一张图纸，丢给你的 AI 助手，一个专属于你的工具已在路上。<br><br>
+      无论是 VS Code 插件、Python 脚本、还是手机 App——只要一篇 .vibe.md，你的 AI 就能将它复现。
+    </p>
+  </div>
+</section>
+
+<hr class="rule rule-thick" style="margin: 0 60px;">
+
+<!-- 工具区 -->
+<section class="tools-section" id="tools">
+  <div class="section-header">
+    <h2 class="section-head-text">热门图纸</h2>
+    <div class="section-head-line"></div>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card featured">
+      <div class="card-tag red">精选 · Featured</div>
+      <div class="card-emoji">🕷️</div>
+      <h3 class="card-title">SVC Spider 多服务器织网 VS Code 插件</h3>
+      <p class="card-vibe">"我每天要在3-4台GPU服务器之间来回切换做实验。传统 Remote-SSH 一次只能连一台，导致 AI 助手只能看到一个节点的代码。我想要一个像蜘蛛结网一样的插件，把所有服务器同时挂载到同一个 VS Code 工作区里。"</p>
+      <div class="card-meta">开发辅助 · 直接Fork 7 · 间接Fork 18 · 2026-03-14</div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="tool-card">
+      <div class="card-tag">生活效率</div>
+      <div class="card-emoji">🍅</div>
+      <h3 class="card-title">番茄工作法锁屏助手</h3>
+      <p class="card-vibe">"我总是控制不住自己玩手机……"</p>
+      <div class="card-meta">Fork 46 · 2026-03-13</div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="tool-card">
+      <div class="card-tag">生活效率</div>
+      <div class="card-emoji">📸</div>
+      <h3 class="card-title">照片批量整理器</h3>
+      <p class="card-vibe">"手机里几千张照片文件名全是乱码……"</p>
+      <div class="card-meta">Fork 95 · 2026-03-12</div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="tool-card">
+      <div class="card-tag">生活效率</div>
+      <div class="card-emoji">📶</div>
+      <h3 class="card-title">WiFi 测速小助手</h3>
+      <p class="card-vibe">"每次感觉网速很慢但不知道是不是错觉……"</p>
+      <div class="card-meta">Fork 157 · 2026-03-10</div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="tool-card" style="border-right:none">
+      <div class="card-tag">开发辅助</div>
+      <div class="card-emoji">📝</div>
+      <h3 class="card-title">Git 提交消息生成器</h3>
+      <p class="card-vibe">"我每次 git commit 都不知道写什么好……"</p>
+      <div class="card-meta">Fork 60 · 2026-03-11</div>
+      <div class="card-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- 创建区 -->
+<section class="create-section" id="create">
+  <div class="create-grid">
+    <div class="create-left">
+      <h2>创造你的<br><em>第一个</em><br>Vibe 工具</h2>
+      <p>只需一行命令，把你的代码和想法变成人人可传播的图纸。没有编程经验？也可以直接告诉你的 AI："帮我把下面的代码整理成 .vibe.md 格式的图纸"。</p>
+      <div class="code-block">python vibe_export.py "我写了一个番茄钟" app.py</div>
+      <a href="#" class="btn-press">立即开始 →</a>
+    </div>
+    <div class="create-right">
+      <div class="feature-item">
+        <div class="feature-num">01</div>
+        <div class="feature-text">
+          <strong>纯文本，零门槛</strong>
+          <p>不需要注册账号，不需要安装软件。一篇 Markdown 就是一个完整工具。</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">02</div>
+        <div class="feature-text">
+          <strong>跨平台、跨语言</strong>
+          <p>Python、JS、Bash、TypeScript，VS Code 插件或手机 App——任何形式都行。</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">03</div>
+        <div class="feature-text">
+          <strong>AI 原生格式</strong>
+          <p>专为大语言模型优化的可读结构，你的 AI 看一眼就能复现整个工具。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Vibe<span>Hub</span></div>
+  <div class="footer-copy">© 2026 VIBEHUB · OPEN SOURCE · 人人皆可编程</div>
+  <div style="font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(245,240,232,0.4);">GITHUB · ABOUT · DOCS</div>
+</footer>
+
+</body>
+</html>

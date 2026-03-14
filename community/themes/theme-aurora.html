@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeHub — Aurora 极光流体</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;900&family=Cormorant:ital,wght@1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --void: #030308;
+  --aurora-1: #0d1b4b;
+  --aurora-2: #1a0533;
+  --gold: #c9a84c;
+  --gold-light: #e8cb7a;
+  --silver: #a8b5c8;
+  --text: #e8e0d4;
+  --text-dim: #8a7f72;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--void);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* === 自定义光标 === */
+.cursor {
+  position: fixed; width: 10px; height: 10px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  border-radius: 50%; pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease, width 0.3s, height 0.3s;
+}
+
+/* === Aurora 背景 === */
+.aurora-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: var(--void);
+  overflow: hidden;
+}
+.aurora-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px); opacity: 0.18;
+  animation: aurora-drift var(--dur, 20s) ease-in-out infinite alternate;
+}
+.b1 { width: 800px; height: 600px; background: #1e3a8a; top: -20%; left: -15%; --dur: 18s; }
+.b2 { width: 700px; height: 700px; background: #581c87; top: 30%; right: -20%; --dur: 24s; }
+.b3 { width: 600px; height: 500px; background: #134e4a; bottom: -10%; left: 20%; --dur: 21s; }
+.b4 { width: 400px; height: 400px; background: #7c2d12; top: 50%; left: 40%; --dur: 16s; opacity: 0.1; }
+
+@keyframes aurora-drift {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(60px, -40px) scale(1.15) rotate(15deg); }
+  66% { transform: translate(-40px, 30px) scale(0.9) rotate(-10deg); }
+  100% { transform: translate(40px, 60px) scale(1.1) rotate(20deg); }
+}
+
+/* 星星 */
+.stars {
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5) 0, transparent 100%),
+    radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.3) 0, transparent 100%),
+    radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,0.5) 0, transparent 100%),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,0.4) 0, transparent 100%),
+    radial-gradient(1px 1px at 45% 85%, rgba(255,255,255,0.3) 0, transparent 100%),
+    radial-gradient(1.5px 1.5px at 90% 35%, rgba(255,255,255,0.6) 0, transparent 100%),
+    radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.4) 0, transparent 100%),
+    radial-gradient(1px 1px at 70% 55%, rgba(255,255,255,0.3) 0, transparent 100%);
+  pointer-events: none;
+}
+
+/* === 导航 === */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 28px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  background: rgba(3,3,8,0.3);
+  backdrop-filter: blur(30px);
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem; font-weight: 600;
+  letter-spacing: 0.25em; color: var(--gold);
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 48px; }
+.nav-links a {
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--silver); text-decoration: none;
+  transition: color 0.3s;
+  font-family: 'Cinzel', serif;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  display: inline-block;
+  padding: 10px 28px;
+  border: 1px solid var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  transition: all 0.4s;
+  position: relative; overflow: hidden;
+}
+.nav-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gold); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.nav-cta:hover::before { transform: scaleX(1); }
+.nav-cta:hover { color: var(--void); }
+.nav-cta span { position: relative; z-index: 1; }
+
+/* === Hero === */
+.hero {
+  position: relative; z-index: 10;
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 120px 40px 80px;
+}
+.hero-overline {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 32px;
+  display: flex; align-items: center; gap: 16px;
+}
+.hero-overline::before, .hero-overline::after {
+  content: ''; flex: 1; max-width: 60px;
+  height: 1px; background: linear-gradient(to right, transparent, var(--gold));
+}
+.hero-overline::after { background: linear-gradient(to left, transparent, var(--gold)); }
+
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 400; line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  background: linear-gradient(160deg, #e8d5a3 0%, var(--gold) 40%, #a07030 70%, var(--gold-light) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: title-shimmer 4s ease-in-out infinite alternate;
+}
+@keyframes title-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.hero-title-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300; font-style: italic;
+  color: var(--silver); margin-bottom: 40px;
+  letter-spacing: 0.05em;
+}
+.hero-desc {
+  font-size: 1.1rem; line-height: 1.8;
+  color: var(--text-dim); max-width: 560px;
+  margin: 0 auto 60px; font-weight: 300;
+  letter-spacing: 0.02em;
+}
+.hero-desc em { color: var(--gold); font-style: normal; }
+
+.hero-actions { display: flex; gap: 20px; justify-content: center; }
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #c9a84c, #8a6520);
+  color: var(--void); font-family: 'Cinzel', serif;
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none;
+  position: relative; overflow: hidden;
+  transition: all 0.4s;
+}
+.btn-gold::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, #e8cb7a, #c9a84c);
+  opacity: 0; transition: opacity 0.4s;
+}
+.btn-gold:hover::after { opacity: 1; }
+.btn-gold span { position: relative; z-index: 1; }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 40px;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--silver); font-family: 'Cinzel', serif;
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.4s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Hero stats */
+.hero-stats {
+  display: flex; gap: 80px; margin-top: 80px;
+  padding-top: 60px;
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Cinzel', serif; font-size: 2.5rem;
+  color: var(--gold); font-weight: 600;
+  background: linear-gradient(160deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+
+/* === 工具区 === */
+.tools-section {
+  position: relative; z-index: 10;
+  padding: 120px 60px;
+}
+.section-ornament {
+  text-align: center; margin-bottom: 20px;
+  font-family: 'Cormorant Garamond', serif; font-size: 0.8rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 20px; justify-content: center;
+}
+.ornament-line { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
+.section-ornament-r { background: linear-gradient(to left, transparent, var(--gold)); }
+
+.section-title {
+  font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400; text-align: center; margin-bottom: 8px;
+  color: var(--text);
+}
+.section-subtitle {
+  text-align: center; color: var(--text-dim); font-size: 1.05rem;
+  font-style: italic; margin-bottom: 80px;
+}
+
+/* 工具卡片 — 玻璃质感 */
+.tools-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; max-width: 1200px; margin: 0 auto;
+}
+.tool-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  padding: 40px 36px;
+  position: relative; overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.tool-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.5s;
+}
+.tool-card:hover::before { opacity: 1; }
+.tool-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0); transition: transform 0.5s;
+}
+.tool-card:hover::after { transform: scaleX(1); }
+.tool-card:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-2px); }
+
+.card-num {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  color: rgba(201,168,76,0.4); letter-spacing: 0.3em;
+  margin-bottom: 24px;
+}
+.card-emoji { font-size: 2.2rem; margin-bottom: 16px; filter: grayscale(0.3); }
+.card-title {
+  font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;
+  letter-spacing: 0.05em; color: var(--text); margin-bottom: 12px;
+}
+.card-vibe {
+  font-size: 0.9rem; line-height: 1.7; color: var(--text-dim);
+  font-style: italic; border-left: 2px solid rgba(201,168,76,0.2);
+  padding-left: 14px; margin-bottom: 24px;
+}
+.card-meta {
+  display: flex; gap: 20px; font-size: 0.68rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: rgba(201,168,76,0.5);
+  font-family: 'Cinzel', serif;
+}
+
+/* === 创建区 === */
+.create-section {
+  position: relative; z-index: 10;
+  padding: 120px 60px;
+  background: rgba(201,168,76,0.02);
+  border-top: 1px solid rgba(201,168,76,0.08);
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+}
+.create-inner {
+  max-width: 800px; margin: 0 auto; text-align: center;
+}
+.create-inner h2 {
+  font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400; color: var(--text); margin-bottom: 20px;
+}
+.create-inner p { font-size: 1.1rem; color: var(--text-dim); font-style: italic; margin-bottom: 48px; }
+.code-vessel {
+  background: rgba(0,0,0,0.5); border: 1px solid rgba(201,168,76,0.15);
+  padding: 32px 40px; text-align: left; position: relative;
+  margin-bottom: 40px;
+}
+.code-vessel::before {
+  content: '// VIBE ENGINE';
+  position: absolute; top: -10px; left: 30px;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  color: var(--gold); background: var(--void);
+  padding: 0 12px; font-family: 'Cinzel', serif;
+}
+.code-vessel code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem; color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+/* === Footer === */
+footer {
+  position: relative; z-index: 10;
+  padding: 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+.footer-brand { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.3em; color: var(--gold); }
+.footer-copy { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; }
+
+/* === 入场动画 === */
+.fade-in {
+  opacity: 0; transform: translateY(30px);
+  animation: fade-in-up 1s ease forwards;
+}
+.fade-in:nth-child(1) { animation-delay: 0.1s; }
+.fade-in:nth-child(2) { animation-delay: 0.3s; }
+.fade-in:nth-child(3) { animation-delay: 0.5s; }
+.fade-in:nth-child(4) { animation-delay: 0.7s; }
+.fade-in:nth-child(5) { animation-delay: 0.9s; }
+
+@keyframes fade-in-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 金线装饰 */
+.divider {
+  display: flex; align-items: center; gap: 20px;
+  max-width: 200px; margin: 0 auto 16px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
+.divider span { font-size: 0.6rem; color: var(--gold); letter-spacing: 0.3em; }
+</style>
+</head>
+<body>
+
+<!-- 光标 -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Aurora 背景 -->
+<div class="aurora-bg">
+  <div class="stars"></div>
+  <div class="aurora-blob b1"></div>
+  <div class="aurora-blob b2"></div>
+  <div class="aurora-blob b3"></div>
+  <div class="aurora-blob b4"></div>
+</div>
+
+<!-- 导航 -->
+<nav>
+  <div class="nav-logo">✦ VibeHub</div>
+  <div class="nav-links">
+    <a href="#">Discover</a>
+    <a href="#">Method</a>
+    <a href="#">Manifest</a>
+  </div>
+  <a href="#" class="nav-cta"><span>Begin</span></a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-overline">
+    <span></span>
+    Natural Language · Creation · Propagation
+    <span></span>
+  </div>
+  <div class="fade-in">
+    <h1 class="hero-title">VIBE</h1>
+    <p class="hero-title-sub">One sentence. One tool.</p>
+  </div>
+  <p class="hero-desc fade-in">
+    在 VibeHub，你只需一句话说出你想解决什么问题。<br>
+    AI 将它变为一篇 <em>人人都能看懂</em> 的图纸——<br>
+    可复制、可传播、可无限 Fork。
+  </p>
+  <div class="hero-actions fade-in">
+    <a href="#tools" class="btn-gold"><span>探索图纸库</span></a>
+    <a href="#create" class="btn-outline">了解更多</a>
+  </div>
+  <div class="hero-stats fade-in">
+    <div class="stat">
+      <div class="stat-num">1,247</div>
+      <div class="stat-label">工具图纸</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">8,934</div>
+      <div class="stat-label">次 Fork</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">362</div>
+      <div class="stat-label">创造者</div>
+    </div>
+  </div>
+</section>
+
+<!-- 工具区 -->
+<section class="tools-section" id="tools">
+  <div style="text-align:center;margin-bottom:16px">
+    <div class="divider"><span>✦</span></div>
+  </div>
+  <div class="section-ornament">
+    <div class="ornament-line"></div>
+    Featured Blueprints
+    <div class="ornament-line section-ornament-r"></div>
+  </div>
+  <h2 class="section-title">热门工具图纸</h2>
+  <p class="section-subtitle">每一个都是一篇纯文本。复制、粘贴，即刻拥有。</p>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="card-num">No.001</div>
+      <div class="card-emoji">🕷️</div>
+      <h3 class="card-title">SVC Spider 多服务器织网插件</h3>
+      <p class="card-vibe">"我每天要在3-4台GPU服务器之间来回切换做实验，想要一个像蜘蛛结网一样的VS Code插件。"</p>
+      <div class="card-meta"><span>Dev Tool</span><span>Fork 25</span><span>2026.03</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="card-num">No.002</div>
+      <div class="card-emoji">🍅</div>
+      <h3 class="card-title">番茄工作法锁屏助手</h3>
+      <p class="card-vibe">"我总是控制不住自己玩手机，每工作25分钟就弹出全屏提醒休息5分钟。"</p>
+      <div class="card-meta"><span>Life</span><span>Fork 46</span><span>2026.03</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="card-num">No.003</div>
+      <div class="card-emoji">📸</div>
+      <h3 class="card-title">照片批量整理器</h3>
+      <p class="card-vibe">"手机里几千张照片文件名全是乱码，我想按年月自动分到不同文件夹并重命名。"</p>
+      <div class="card-meta"><span>Life</span><span>Fork 95</span><span>2026.03</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="card-num">No.004</div>
+      <div class="card-emoji">📶</div>
+      <h3 class="card-title">WiFi 测速小助手</h3>
+      <p class="card-vibe">"每次感觉网速很慢但不知道是不是错觉，打开就能测当前网速。"</p>
+      <div class="card-meta"><span>Life</span><span>Fork 157</span><span>2026.03</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="card-num">No.005</div>
+      <div class="card-emoji">📝</div>
+      <h3 class="card-title">Git 提交消息生成器</h3>
+      <p class="card-vibe">"我每次 git commit 都不知道写什么好，想要一个工具自动分析我改了什么文件。"</p>
+      <div class="card-meta"><span>Dev Tool</span><span>Fork 60</span><span>2026.03</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="card-num">No.006</div>
+      <div class="card-emoji">💰</div>
+      <h3 class="card-title">极简记账本</h3>
+      <p class="card-vibe">"不想装任何记账App，就想要一个最最简单的命令行工具，输入金额和备注就行。"</p>
+      <div class="card-meta"><span>Life</span><span>Fork 122</span><span>2026.03</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 创建区 -->
+<section class="create-section" id="create">
+  <div class="create-inner">
+    <div class="divider"><span>✦</span></div>
+    <h2>创建你的第一个 Vibe</h2>
+    <p>只需一行命令，把你的代码与意图合并为一篇永恒的图纸。</p>
+    <div class="code-vessel">
+      <code>$ python vibe_export.py "我写了一个番茄钟" app.py</code>
+    </div>
+    <div class="hero-actions">
+      <a href="#" class="btn-gold"><span>开始创作</span></a>
+      <a href="#" class="btn-outline">查看文档</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">✦ VIBEHUB</div>
+  <div class="footer-copy">© 2026 · 人人皆可编程 · Open Source</div>
+</footer>
+
+<script>
+// 光标跟随
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// 悬停效果
+document.querySelectorAll('a, button, .tool-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '6px'; cursor.style.height = '6px';
+    ring.style.width = '50px'; ring.style.height = '50px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px'; cursor.style.height = '10px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+  });
+});
+
+// 数字动画
+document.querySelectorAll('.stat-num').forEach(el => {
+  const text = el.textContent.replace(/,/g, '');
+  const target = parseInt(text);
+  const dur = 2000;
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      const start = performance.now();
+      const tick = now => {
+        const p = Math.min((now - start) / dur, 1);
+        const v = Math.round(target * (1 - Math.pow(1-p, 3)));
+        el.textContent = v.toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      obs.disconnect();
+    }
+  }, { threshold: 0.5 });
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
