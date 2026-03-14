@@ -21,7 +21,9 @@
                 <a href="#explore" class="nav-link">发现工具</a>
                 <a href="#how" class="nav-link">工作原理</a>
                 <a href="#create" class="nav-link">创建工具</a>
-                <a href="#" class="nav-btn">开始使用</a>
+                <div id="auth-container">
+                    <a href="#" class="nav-btn" id="login-btn" onclick="loginWithGitHub(event)">GitHub 登录</a>
+                </div>
             </div>
             <button class="hamburger" id="hamburger" aria-label="菜单">
                 <span></span><span></span><span></span>
