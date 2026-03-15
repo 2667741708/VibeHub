@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install --registry https://registry.npmmirror.com",
+  "framework": "nextjs"
+}

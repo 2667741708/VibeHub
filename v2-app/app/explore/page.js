@@ -129,11 +129,11 @@ export default function ExplorePage() {
                   <h3>{tool.name}</h3>
                   <p className="tool-desc">{tool.description}</p>
                   <div className="tool-meta" style={{ marginBottom: 24 }}>
-                    <span>By {tool.author?.name || 'VibeHub Community'}</span>
+                    <span>By {tool.author_name || tool.author?.name || 'VibeHub Community'}</span>
                   </div>
                   <div className="tool-meta">
                     <span>{tool.language || ''}</span>
-                    <span>{tool.created || ''}</span>
+                    <span>{(tool.created_at || tool.created || '').slice(0, 10)}</span>
                   </div>
                   <div className="tool-card-overlay">
                     <span className="view-btn">View Details →</span>
