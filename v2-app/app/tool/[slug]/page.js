@@ -230,6 +230,9 @@ export default function ToolDetailPage({ params }) {
               >
                 {starLoading ? '...' : isStarred ? '⭐ 已收藏' : '☆ 收藏'}
               </button>
+              <Link href={`/tree/${tool.slug || slug}`} className="btn btn-ghost" style={{ textDecoration: 'none' }}>
+                🌳 Vibe Tree
+              </Link>
             </div>
             <p className="action-hint">纯文字架构与源码指引，完美避开超长代码输入限制</p>
           </div>
