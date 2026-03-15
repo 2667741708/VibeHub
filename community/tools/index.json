@@ -1,5 +1,51 @@
 [
   {
+    "name": "Excalidraw",
+    "id": "excalidraw",
+    "description": "虚拟白板工具，可以用来绘制具有手绘风格的图表及架构图。完全开源且支持端到端加密。",
+    "category": "workflow",
+    "tags": [
+      "开源",
+      "白板",
+      "画图",
+      "手绘"
+    ],
+    "author": {
+      "name": "excalidraw",
+      "link": "https://github.com/excalidraw"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Browser",
+    "entry": "https://excalidraw.com/",
+    "created": "2026-03-15",
+    "path": "tools/excalidraw",
+    "repo": "https://github.com/excalidraw/excalidraw"
+  },
+  {
+    "name": "JSON Crack",
+    "id": "json_crack",
+    "description": "创新的开源数据可视化工具。它能将 JSON、YAML、CSV 等枯燥的数据，瞬间变成可交互的思维导图网状结构。",
+    "category": "dev",
+    "tags": [
+      "开源",
+      "JSON",
+      "可视化",
+      "开发者工具"
+    ],
+    "author": {
+      "name": "AykutSarac",
+      "link": "https://github.com/AykutSarac"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Browser",
+    "entry": "https://jsoncrack.com/editor",
+    "created": "2026-03-15",
+    "path": "tools/json_crack",
+    "repo": "https://github.com/AykutSarac/jsoncrack.com"
+  },
+  {
     "name": "AI Paper Reader",
     "id": "ai_paper_reader",
     "description": "上传一篇英文论文 PDF，选中文字即弹出翻译和术语解释气泡，还能一键生成摘要、与 AI 深度问答，最后导出完整的中文阅读笔记。",
@@ -12,13 +58,17 @@
       "Gemini",
       "PDF"
     ],
-    "author": "2667741708",
+    "author": {
+      "name": "Wang Haoming",
+      "link": "https://github.com/wanghaoming"
+    },
     "version": "3.2.0",
     "language": "javascript",
     "requirements": "Node.js >= 18, Gemini CLI 或 Gemini API Key, Python 3 + PyMuPDF",
     "entry": "src/index.html",
     "created": "2026-03-14",
-    "path": "tools/ai_paper_reader"
+    "path": "tools/ai_paper_reader",
+    "repo": "https://github.com/wanghaoming/VibeHub/tree/main/community/tools/ai_paper_reader"
   },
   {
     "name": "多服务器代码同步器",
@@ -31,13 +81,17 @@
       "VS Code",
       "远程开发"
     ],
-    "author": "2667741708",
+    "author": {
+      "name": "Wang Haoming",
+      "link": "https://github.com/wanghaoming"
+    },
     "version": "1.0.0",
     "language": "typescript",
     "requirements": "Node.js 18+, VS Code 1.80+",
     "entry": "src/extension.ts",
     "created": "2026-03-14",
-    "path": "tools/svc_spider"
+    "path": "tools/svc_spider",
+    "repo": "https://github.com/wanghaoming/VibeHub/tree/main/community/tools/svc_spider"
   },
   {
     "name": "番茄工作法锁屏助手",
@@ -50,13 +104,16 @@
       "健康",
       "专注"
     ],
-    "author": "2667741708",
+    "author": {
+      "name": "Wang Haoming"
+    },
     "version": "1.0.0",
     "language": "python",
     "requirements": "Python 3.8+, tkinter",
     "entry": "src/pomodoro.py",
     "created": "2026-03-13",
-    "path": "tools/pomodoro"
+    "path": "tools/pomodoro",
+    "repo": "https://github.com/wanghaoming/VibeHub/tree/main/community/tools/pomodoro"
   },
   {
     "name": "照片批量整理器",
@@ -69,13 +126,16 @@
       "批量重命名",
       "效率"
     ],
-    "author": "2667741708",
+    "author": {
+      "name": "Wang Haoming"
+    },
     "version": "1.0.0",
     "language": "python",
     "requirements": "Python 3.8+, Pillow",
     "entry": "src/photo_renamer.py",
     "created": "2026-03-12",
-    "path": "tools/photo_renamer"
+    "path": "tools/photo_renamer",
+    "repo": "https://github.com/wanghaoming/VibeHub/tree/main/community/tools/photo_renamer"
   },
   {
     "name": "WiFi 测速小助手",
@@ -88,12 +148,15 @@
       "WiFi",
       "网络"
     ],
-    "author": "2667741708",
+    "author": {
+      "name": "Wang Haoming"
+    },
     "version": "1.0.0",
     "language": "python",
     "requirements": "Python 3.8+, speedtest-cli",
     "entry": "src/wifi_speed.py",
     "created": "2026-03-10",
-    "path": "tools/wifi_speed"
+    "path": "tools/wifi_speed",
+    "repo": "https://github.com/wanghaoming/VibeHub/tree/main/community/tools/wifi_speed"
   }
 ]

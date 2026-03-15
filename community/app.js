@@ -74,11 +74,11 @@ function renderTools(filter, search) {
     if (filtered.length === 0) {
         grid.innerHTML = `
             <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-muted);">
-                <div style="width:64px;height:64px;margin:0 auto 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);">
+                <div style="width:48px;height:48px;margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:12px;display:flex;align-items:center;justify-content:center;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.0004 20.9999L16.6504 16.6499" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
-                <p style="font-size:1.1rem;font-family:'Syne', sans-serif;">未找到匹配结果</p>
-                <p style="font-size:0.85rem;margin-top:8px;opacity:0.6;">试试更换搜索词汇或类别</p>
+                <p style="font-size:1.1rem;font-family:var(--font-body);font-weight:500;color:var(--text-primary);">未找到匹配结果</p>
+                <p style="font-size:0.9rem;margin-top:8px;font-weight:400;">试试更换搜索词汇或类别</p>
             </div>`;
         return;
     }
@@ -89,7 +89,7 @@ function renderTools(filter, search) {
         if (currentSearch.trim()) {
             const q = currentSearch.trim();
             const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-            const hl = '<mark style="background:rgba(255,255,255,0.1);color:#fff;border-radius:2px;padding:0 2px;">$1</mark>';
+            const hl = '<mark style="background:var(--accent-glow);color:var(--text-primary);border-radius:2px;padding:0 2px;">$1</mark>';
             dn = dn.replace(re, hl);
             dd = dd.replace(re, hl);
         }
@@ -101,6 +101,9 @@ function renderTools(filter, search) {
             </div>
             <h3>${dn}</h3>
             <p class="tool-desc">${dd}</p>
+            <div class="tool-meta" style="margin-bottom: 24px;">
+                <span>By ${tool.author?.name || 'VibeHub Community'}</span>
+            </div>
             <div class="tool-meta">
                 <span>${tool.language || ''}</span>
                 <span>${tool.created || ''}</span>
@@ -134,11 +137,36 @@ async function openTool(id) {
     const compiledHtml = renderMarkdown(readme);
 
     const modal = document.getElementById('modalBody');
+    
+    // Build Author HTML
+    let authorHtml = '';
+    if (tool.author) {
+        if (tool.author.link) {
+            authorHtml = `by <a href="${tool.author.link}" target="_blank" style="color:var(--text-primary); text-decoration:underline;">${tool.author.name}</a>`;
+        } else {
+            authorHtml = `by <span style="color:var(--text-primary);">${tool.author.name}</span>`;
+        }
+    }
+
+    // Build Repo Link HTML
+    let repoLinkHtml = '';
+    if (tool.repo) {
+        repoLinkHtml = `
+            <a href="${tool.repo}" target="_blank" class="btn btn-ghost btn-large" style="text-decoration: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                获取源码
+            </a>
+        `;
+    }
+
     modal.innerHTML = `
         <div class="tool-detail-header">
             <div class="tool-monogram td-icon">${tool.iconLetter}</div>
             <div class="td-title-wrapper">
                 <h1>${tool.name}</h1>
+                <div style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 8px;">
+                    ${authorHtml}
+                </div>
                 <span class="tool-tag">${tool.tag}</span>
             </div>
         </div>
@@ -148,11 +176,14 @@ async function openTool(id) {
             <p>${tool.description}</p>
         </div>
 
-        <div class="tool-actions-box">
-            <button class="btn btn-primary btn-large" onclick="copyAndShowAISelection()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-                一键复制图纸，去 AI 运行
-            </button>
+        <div class="tool-actions-box" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-direction: column;">
+            <div style="display: flex; gap: 16px;">
+                <button class="btn btn-primary btn-large" onclick="copyAndShowAISelection()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    一键复制图纸，去 AI 运行
+                </button>
+                ${repoLinkHtml}
+            </div>
             <p class="action-hint">直接丢给任何大语言模型即可自动运行或定制修改</p>
         </div>
 
@@ -445,9 +476,9 @@ function updateAuthUI() {
         try {
             const user = JSON.parse(userStr);
             authContainer.innerHTML = `
-                <div class="user-profile" style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="logout()" title="点击退出登录">
-                    <img src="${user.avatar_url}" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover;">
-                    <span style="font-size: 0.9rem; font-weight: 500;">${user.login}</span>
+                <div class="user-profile" style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 12px 4px 4px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); transition: var(--transition);" onmouseover="this.style.background='var(--bg-card)'" onmouseout="this.style.background='transparent'" onclick="logout()" title="点击退出登录">
+                    <img src="${user.avatar_url}" style="width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border-faint); object-fit: cover;">
+                    <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-primary); font-family: var(--font-body);">${user.login}</span>
                 </div>`;
         } catch(e) {
             authContainer.innerHTML = `<a href="#" class="nav-btn" id="login-btn" onclick="loginWithGitHub(event)">GitHub 登录</a>`;

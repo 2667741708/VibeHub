@@ -1,0 +1,13 @@
+{
+  "name": "FocusDemo (缩放演示仪)",
+  "id": "focus_demo",
+  "description": "让普通的录屏瞬间拥有高级感！交互式为视频添加平滑的焦点缩放运镜，支持多段剪辑与死区自动裁剪。",
+  "category": "fun",
+  "tags": ["视频剪辑", "演示", "动画", "高级感特效", "焦点缩放"],
+  "author": "wanghaoming",
+  "version": "1.0.0",
+  "language": "html",
+  "requirements": "现代浏览器 (Chrome/Edge/Safari)",
+  "entry": "src/index.html",
+  "created": "2026-03-15"
+}
