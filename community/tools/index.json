@@ -46,6 +46,96 @@
     "repo": "https://github.com/AykutSarac/jsoncrack.com"
   },
   {
+    "name": "Hoppscotch",
+    "id": "hoppscotch",
+    "description": "开源的 API 开发生态系统，Postman 的最佳替代品。支持 REST、GraphQL、WebSocket 等协议调试，轻量极速且完全免费。",
+    "category": "dev",
+    "tags": ["开源", "API", "HTTP", "开发者工具", "Postman替代"],
+    "author": {
+      "name": "hoppscotch",
+      "link": "https://github.com/hoppscotch"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Browser",
+    "entry": "https://hoppscotch.io/",
+    "created": "2026-03-15",
+    "path": "tools/hoppscotch",
+    "repo": "https://github.com/hoppscotch/hoppscotch"
+  },
+  {
+    "name": "Responsively App",
+    "id": "responsively",
+    "description": "专为前端开发者打造的响应式预览浏览器。一屏同时显示手机、平板、桌面多个视口，实时同步滚动和点击。",
+    "category": "dev",
+    "tags": ["开源", "响应式", "前端", "浏览器", "开发者工具"],
+    "author": {
+      "name": "responsively-org",
+      "link": "https://github.com/responsively-org"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Desktop (Electron)",
+    "entry": "https://responsively.app/",
+    "created": "2026-03-15",
+    "path": "tools/responsively",
+    "repo": "https://github.com/responsively-org/responsively-app"
+  },
+  {
+    "name": "Omni Tools",
+    "id": "omni_tools",
+    "description": "自託管的全能在线工具箱集合。无广告、无追踪，涵盖图片处理、PDF操作、数据转换等数十种日常实用功能。",
+    "category": "life",
+    "tags": ["开源", "工具箱", "在线工具", "PDF", "图片处理"],
+    "author": {
+      "name": "iib0011",
+      "link": "https://github.com/iib0011"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Browser",
+    "entry": "https://omni-tools.dev/",
+    "created": "2026-03-15",
+    "path": "tools/omni_tools",
+    "repo": "https://github.com/iib0011/omni-tools"
+  },
+  {
+    "name": "JSON Hero",
+    "id": "json_hero",
+    "description": "优雅的 JSON 浏览器。自动识别日期、颜色、图片URL等，让你像浏览网页一样探索JSON数据结构。",
+    "category": "dev",
+    "tags": ["开源", "JSON", "浏览器", "可视化", "开发者工具"],
+    "author": {
+      "name": "Trigger.dev",
+      "link": "https://github.com/triggerdotdev"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Browser",
+    "entry": "https://jsonhero.io/",
+    "created": "2026-03-15",
+    "path": "tools/json_hero",
+    "repo": "https://github.com/triggerdotdev/jsonhero-web"
+  },
+  {
+    "name": "Repomix",
+    "id": "repomix",
+    "description": "将整个代码仓库打包成一个AI友好的单文件。完美适配 ChatGPT、Claude 等大模型的上下文输入，是AI辅助编码的利器。",
+    "category": "dev",
+    "tags": ["开源", "AI", "LLM", "代码仓库", "开发者工具"],
+    "author": {
+      "name": "yamadashy",
+      "link": "https://github.com/yamadashy"
+    },
+    "version": "1.0.0",
+    "language": "typescript",
+    "requirements": "Node.js",
+    "entry": "https://repomix.com/",
+    "created": "2026-03-15",
+    "path": "tools/repomix",
+    "repo": "https://github.com/yamadashy/repomix"
+  },
+  {
     "name": "AI Paper Reader",
     "id": "ai_paper_reader",
     "description": "上传一篇英文论文 PDF，选中文字即弹出翻译和术语解释气泡，还能一键生成摘要、与 AI 深度问答，最后导出完整的中文阅读笔记。",

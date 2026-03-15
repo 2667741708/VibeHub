@@ -1,0 +1,45 @@
+# 拍摄 VibeHub 宣传视频
+title: "VibeHub - The Ambient Tool Community"
+output: "vibehub_promo.mp4"
+fps: 60
+
+keyframes:
+  - time: 0
+    box_x: 0
+    box_y: 0
+    box_width: 1854
+    box_height: 927
+    caption: "> 打开 VibeHub 社区..."
+    smoothness: 10
+
+  - time: 2.0
+    box_x: 600
+    box_y: 200
+    box_width: 654
+    box_height: 327
+    caption: "> 全新奢华 Warm Dark 风格"
+    smoothness: 15
+
+  - time: 5.0
+    box_x: 0
+    box_y: 600
+    box_width: 1854
+    box_height: 927
+    caption: "> 超过数千个实用工具卡片"
+    smoothness: 10
+    
+  - time: 8.0
+    box_x: 200
+    box_y: 650
+    box_width: 500
+    box_height: 250
+    caption: "> 包括全球顶级开源项目"
+    smoothness: 12
+
+  - time: 11.0
+    box_x: 0
+    box_y: 0
+    box_width: 1854
+    box_height: 927
+    caption: "> 属于黑客与创造者的知识库"
+    smoothness: 15

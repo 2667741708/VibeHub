@@ -21,7 +21,8 @@ let TOOLS = [];
 const CATEGORY_LABELS = {
     'life': '生活效率',
     'dev': '开发辅助',
-    'fun': '趣味小工具'
+    'fun': '趣味小工具',
+    'workflow': '效率与协作'
 };
 
 // === 加载工具索引 ===
@@ -205,7 +206,7 @@ async function openTool(id) {
         </div>
     `;
 
-    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('modalOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
 
     modal.dataset.rawContent = fullSourceText;
@@ -215,7 +216,7 @@ async function openTool(id) {
 }
 
 function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
+    document.getElementById('modalOverlay').classList.remove('active');
     document.body.style.overflow = '';
 }
 
@@ -263,7 +264,7 @@ function copyAndShowAISelection(mode) {
 
     navigator.clipboard.writeText(payload).then(() => {
         closeModal();
-        document.getElementById('aiModalOverlay').classList.add('open');
+        document.getElementById('aiModalOverlay').classList.add('active');
         document.body.style.overflow = 'hidden';
     }).catch(err => {
         console.error('Copy failed', err);
@@ -272,7 +273,7 @@ function copyAndShowAISelection(mode) {
 }
 
 function closeAiModal() {
-    document.getElementById('aiModalOverlay').classList.remove('open');
+    document.getElementById('aiModalOverlay').classList.remove('active');
     document.body.style.overflow = '';
 }
 
