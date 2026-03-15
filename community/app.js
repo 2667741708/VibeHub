@@ -177,14 +177,19 @@ async function openTool(id) {
         </div>
 
         <div class="tool-actions-box" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-direction: column;">
-            <div style="display: flex; gap: 16px;">
-                <button class="btn btn-primary btn-large" onclick="copyAndShowAISelection()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-                    一键复制图纸，去 AI 运行
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: -4px;">获取图纸并直接发送给大语言模型：</p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                <button class="btn btn-primary" onclick="copyAndShowAISelection('web')" title="适用于具备网页预览面板的 AI (如 Claude Artifacts)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h7m4 0h5v5m-5-5l6 6"></path></svg>
+                    复刻为 Web 前端工具
+                </button>
+                <button class="btn btn-primary" style="background:var(--bg-hover); border-color:var(--border);" onclick="copyAndShowAISelection('local')" title="适合本地部署、终端或封装为 App">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    本地部署与深度封装
                 </button>
                 ${repoLinkHtml}
             </div>
-            <p class="action-hint">直接丢给任何大语言模型即可自动运行或定制修改</p>
+            <p class="action-hint">纯文字架构与源码指引，完美避开超长代码输入限制</p>
         </div>
 
         <div class="tool-dev-section">
@@ -205,6 +210,8 @@ async function openTool(id) {
 
     modal.dataset.rawContent = fullSourceText;
     modal.dataset.toolName = tool.name;
+    modal.dataset.toolDesc = tool.description;
+    modal.dataset.toolRepo = tool.repo || '';
 }
 
 function closeModal() {
@@ -224,11 +231,35 @@ function toggleDevSection(btn) {
 }
 
 // === 增强复制与 AI 跳转 ===
-function copyAndShowAISelection() {
+function copyAndShowAISelection(mode) {
     const rawContent = document.getElementById('modalBody').dataset.rawContent || '';
     const toolName = document.getElementById('modalBody').dataset.toolName || '工具';
+    const toolDesc = document.getElementById('modalBody').dataset.toolDesc || '';
+    const toolRepo = document.getElementById('modalBody').dataset.toolRepo || '';
     
-    const payload = `这是我在 VibeHub 社区发现的工具「${toolName}」的图纸，请你根据它的代码格式和要求，帮我运行起来（或指导我如何运行它）。如果有需要修改的地方，我会接着告诉你需求：\n\n-----------------\n${rawContent}`;
+    let envTarget = '';
+    let actionTarget = '';
+
+    if (mode === 'web') {
+        envTarget = '具备 Artifacts 或代码预览能力的网页环境（例如 Claude 或 Vercel V0）';
+        actionTarget = '通过纯 Web 技术栈将其复刻为一个可交互验证的前端应用';
+    } else {
+        envTarget = '我的本地环境（或者我想要封装为独立的桌面/手机 App）';
+        actionTarget = '指导我如何在本地部署环境并将其跑起来，或者给出将其打包封装为独立 App 的完整指南';
+    }
+
+    let payload = `你好，我在 VibeHub 社区发现了一个非常棒的数字工具：「${toolName}」。\n`;
+    payload += `我的运行与配置目标是：${envTarget}。\n`;
+    payload += `请你仔细阅读下方提供的【工具说明】和【核心图纸】，然后一步步协助我完成构建，即${actionTarget}。\n\n`;
+    
+    payload += `--- 【工具简要说明】 ---\n${toolDesc}\n\n`;
+    
+    if (toolRepo) {
+        payload += `--- 【源码仓库地址】 ---\n如果你支持联网或读取链接代码，请直接分析以下代码仓库中的详细源码环境（这样我就不需要手动粘贴巨长无比的代码给你了）：\n${toolRepo}\n\n`;
+    }
+    
+    payload += `--- 【核心设计与思路图纸 (Blueprint)】 ---\n(以下为该工具的框架、提示词与核心说明，请参考其思想进行代码编写或环境搭建)\n\n${rawContent}\n\n-----------------\n`;
+    payload += `请先向我简要汇报你对该工具的理解和接下来的执行路线图。如果你准备好了就可以随时发代码，如果有任何不明确或需要修改定制的地方，我会继续指引你。`;
 
     navigator.clipboard.writeText(payload).then(() => {
         closeModal();
