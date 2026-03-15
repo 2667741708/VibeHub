@@ -1,9 +1,14 @@
 // VibeHub V2 — Root Layout
-// [AI-Trace] 新建文件 / New file
-// [EN] Root layout with Navbar and Footer, global CSS and fonts
-// [ZH] 根布局组件，包含导航栏与页脚、全局样式与字体引入
+// [AI-Trace] 基于 v2-app/app/layout.js 修改 (修复 import 顺序)
+// [EN] Root layout with Navbar, Footer, and AuthListener client component
+// [ZH] 根布局：Navbar + Footer + AuthListener 客户端组件
+//
+// 修改内容 / Changes (vs 上一版本):
+// - 将 import AuthListenerClient 移到文件顶部 (符合 ESM 规范)
+// - 添加 AuthListenerClient 到 body 中
 
 import './globals.css';
+import AuthListenerClient from '@/components/AuthListener';
 
 export const metadata = {
   title: 'VibeHub — 人人皆可编程的工具社区',
@@ -22,7 +27,7 @@ function Navbar() {
           <a href="/#how" className="nav-link">使用指南</a>
           <a href="/publish" className="nav-link">发布工具</a>
           <div id="auth-container">
-            <a href="/api/auth/login" className="nav-btn" id="login-btn">GitHub 登录</a>
+            <span className="nav-btn">GitHub 登录</span>
           </div>
         </div>
       </div>
@@ -58,6 +63,7 @@ export default function RootLayout({ children }) {
     <html lang="zh-CN">
       <body>
         <Navbar />
+        <AuthListenerClient />
         {children}
         <Footer />
       </body>
