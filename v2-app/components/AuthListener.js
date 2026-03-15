@@ -37,13 +37,20 @@ export default function AuthListenerClient() {
     if (!container) return;
 
     if (user) {
-      const avatar = user.user_metadata?.avatar_url || '';
-      const name = user.user_metadata?.user_name || user.email || 'User';
+      const avatar = user.user_metadata?.avatar_url || 'https://github.com/github.png';
+      const name = user.user_metadata?.preferred_username || user.user_metadata?.name || 'User';
       container.innerHTML = `
         <div style="display:flex;align-items:center;gap:10px">
-          <img src="${avatar}" alt="${name}" 
-               style="width:32px;height:32px;border-radius:50%;border:1px solid var(--border)" />
-          <span style="font-size:0.85rem;color:var(--text-primary);font-weight:500">${name}</span>
+          <a href="/profile" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;">
+            <img 
+              src="${avatar}" 
+              alt="Avatar" 
+              style="width:24px;height:24px;border-radius:50%;"
+            />
+            <span style="font-size:0.9rem;font-weight:500;">
+              ${name}
+            </span>
+          </a>
           <button id="logout-btn" class="nav-btn" style="font-size:0.78rem;padding:6px 14px;cursor:pointer">登出</button>
         </div>
       `;

@@ -6,6 +6,8 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
+import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default function ToolDetailPage({ params }) {
   const { slug } = use(params);
@@ -15,6 +17,9 @@ export default function ToolDetailPage({ params }) {
   const [showSource, setShowSource] = useState(false);
   const [showAiModal, setShowAiModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isStarred, setIsStarred] = useState(false);
+  const [starLoading, setStarLoading] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -39,9 +44,30 @@ export default function ToolDetailPage({ params }) {
           data.iconLetter = (data.name || 'T').charAt(0).toUpperCase();
           setTool(data);
 
+          // 检查当前用户与收藏状态
+          let currentUser = null;
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            currentUser = session?.user;
+            if (currentUser) {
+              setUser(currentUser);
+              if (data.id) {
+                const { data: starData } = await supabase
+                  .from('stars')
+                  .select('id')
+                  .eq('user_id', currentUser.id)
+                  .eq('tool_id', data.id)
+                  .single();
+                if (starData) setIsStarred(true);
+              }
+            }
+          } catch (e) {
+            console.warn('Auth check error:', e);
+          }
+
           // 加载 README
           try {
-            const readmeRes = await fetch(`/community/tools/${data.id || slug}/README.md`);
+            const readmeRes = await fetch(`/community/tools/${data.slug || slug}/README.md`);
             if (readmeRes.ok) setReadme(await readmeRes.text());
           } catch (e) {}
         }
@@ -86,6 +112,36 @@ export default function ToolDetailPage({ params }) {
     });
   }
 
+  async function toggleStar() {
+    if (!user) {
+      alert('请先通过右上角登录 GitHub 才能使用收藏功能');
+      return;
+    }
+    if (!tool || !tool.id) return;
+
+    setStarLoading(true);
+    try {
+      if (isStarred) {
+        await supabase
+          .from('stars')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('tool_id', tool.id);
+        setIsStarred(false);
+      } else {
+        await supabase
+          .from('stars')
+          .insert({ user_id: user.id, tool_id: tool.id });
+        setIsStarred(true);
+      }
+    } catch (e) {
+      console.error(e);
+      alert('操作失败');
+    } finally {
+      setStarLoading(false);
+    }
+  }
+
   if (loading) {
     return (
       <section className="section" style={{ paddingTop: 140, textAlign: 'center' }}>
@@ -126,9 +182,22 @@ export default function ToolDetailPage({ params }) {
           </div>
 
           {/* Hero Description */}
-          <div className="tool-detail-hero">
+          <div className="tool-detail-hero" style={{ position: 'relative' }}>
             <h3>这个工具能帮你做什么？</h3>
             <p>{tool.description}</p>
+            
+            <div style={{ marginTop: 32, textAlign: 'center' }}>
+              <Link href={`/remix/${tool.slug || slug}`} className="btn btn-primary" style={{
+                background: 'linear-gradient(135deg, #181715, #3a3833)', 
+                color: '#fff', 
+                border: 'none',
+                padding: '14px 28px',
+                fontSize: '1.05rem',
+                borderRadius: 'var(--radius-lg)'
+              }}>
+                ✨ Remix 这个工具
+              </Link>
+            </div>
           </div>
 
           {/* Action Buttons */}
@@ -149,6 +218,18 @@ export default function ToolDetailPage({ params }) {
                   获取源码
                 </a>
               )}
+              <button 
+                className="btn btn-ghost" 
+                onClick={toggleStar}
+                disabled={starLoading}
+                style={{ 
+                  color: isStarred ? '#eab308' : 'var(--text-secondary)',
+                  borderColor: isStarred ? '#fef08a' : 'var(--border)',
+                  background: isStarred ? '#fefce8' : 'transparent'
+                }}
+              >
+                {starLoading ? '...' : isStarred ? '⭐ 已收藏' : '☆ 收藏'}
+              </button>
             </div>
             <p className="action-hint">纯文字架构与源码指引，完美避开超长代码输入限制</p>
           </div>
