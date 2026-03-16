@@ -8,6 +8,7 @@
 import { useState, useEffect, use } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import FocusDemoBridge from '@/components/FocusDemoBridge';
 
 export default function ToolDetailPage({ params }) {
   const { slug } = use(params);
@@ -235,6 +236,9 @@ export default function ToolDetailPage({ params }) {
               </Link>
             </div>
             <p className="action-hint">纯文字架构与源码指引，完美避开超长代码输入限制</p>
+
+            {/* FocusDemo Local Bridge */}
+            <FocusDemoBridge />
           </div>
 
           {/* Source Code / README Toggle */}
